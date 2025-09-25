@@ -1,6 +1,4 @@
-# Projetos-2
-
-Projetos 2 - Jornal do commercio
+# Projetos-2 Jornal do commercio
 
 Este repositório contém os materiais e desenvolvimentos realizados para a disciplina Projetos 2, com foco na criação e organização de conteúdos para um jornal acadêmico/experimental.
 
