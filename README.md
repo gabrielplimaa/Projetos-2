@@ -1,49 +1,30 @@
-# Projetos-2 Jornal do commercio
+ Projetos 2 - Jornal do Commercio  
 
-Este repositório contém os materiais e desenvolvimentos realizados para a disciplina Projetos 2, com foco na criação e organização de conteúdos para um jornal acadêmico/experimental.
+(Descrição)
 
-📌 Objetivo
+## 🎯 Objetivo  
 
-O projeto tem como finalidade aplicar conceitos de comunicação, design e tecnologia na construção de um jornal, unindo teoria e prática.
+## 📰 Conteúdo  
 
-📰 Conteúdo
+## 🛠️ Tecnologias e Ferramentas 
+- Softwares de diagramação: *Figma, Canva*.  
+- Ferramentas de colaboração: *GitHub, Trello, Miro*.  
 
-Aqui você encontrará:
+## 📂 Estrutura do Repositório  
 
-Artigos e reportagens produzidos durante o curso;
+## 👥 Equipe / Autoria   
 
-Materiais de apoio e referências;
-
-Protótipos e layouts do jornal;
-
-Códigos e ferramentas utilizadas no desenvolvimento digital (quando aplicável).
-
-🚀 Tecnologias e Ferramentas
-
-Dependendo da etapa do projeto, podem ser utilizados:
-
-Markdown para redação e organização de textos;
-
-Softwares de diagramação (InDesign, Canva, etc.);
-
-Ferramentas de colaboração (GitHub, Trello, Google Docs).
-
-📂 Estrutura do Repositório
-Projetos2-Jornal/
-│── artigos/        # Textos produzidos
-│── layout/         # Protótipos e design
-│── referencias/    # Materiais de apoio e bibliografia
-│── codigo/         # Scripts ou automações utilizadas
-│── README.md
-
-👥 Equipe / Autoria
-
-Este projeto foi desenvolvido no contexto da disciplina Projetos 2.
-
-Autor: [Seu Nome]
-
-Orientador/Professor: [Nome do professor, se desejar]
-
-📅 Status
-
-📖 Em andamento / finalizado (ajuste conforme o caso).
+- Orientador/Professor: **Eduardo Nascimento de Arruda**  
+- Membros:
+- *Alice Sales Oliveira*
+- *Bernardo Cavalcanti Carneiro Leão*
+- *Cecília de Souza Silva*
+- *Gabriel Pereira Lima*
+- *Giulia Laureano Santos*
+- *Guilherme Tolentino leitão de Melo*
+- *João Eduardo Azevedo de Andrade*
+- *Lucca Albuquerque D'Angelo*
+- *Mel Cavalcanti Portela*
+- *Pedro XavierGama Tenório Canel*
+- *Rafael Coutinho Lima*            
+---
