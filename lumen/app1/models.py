@@ -17,7 +17,7 @@ class Artigos(models.Model):
     
     def __str__(self):
         return self.titulo
-#primeira hist
+
 class Sugestao(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="suggested_readings")
     article = models.ForeignKey(Artigos, on_delete=models.CASCADE, related_name="suggestions_for")
