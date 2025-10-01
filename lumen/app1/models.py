@@ -31,3 +31,35 @@ class Sugestao(models.Model):
         if self.user:
             return f"Sugestão para {self.user.username}: {self.suggested_article.title}"
         return f"Sugestão: {self.suggested_article.title}"
+
+
+class Progresso( models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="reading_progress")
+    artigo= models.ForeignKey(Artigos, on_delete=models.CASCADE,related_name="read_by_users")
+    completado=models.BooleanField(default=False)
+    date=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "artigo")# evita a duplicacao
+    
+    def __str__(self):
+        if self.completado:
+            status = "Completo"
+        else:
+            status = "Em progresso"
+        return f"{self.user.username} - {self.article.title} ({status})"
+
+
+class Progresso_diario(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="daily_progress")
+    data = models.DateField(auto_now_add=True)
+    artigos_lidos = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ("user", "data")
+
+    def __str__(self):
+        return f"{self.user.username} - Progresso diário em {self.data}"
+
+    
+    
