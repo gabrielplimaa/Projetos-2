@@ -2,19 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Categoria(models.Model):
-    sugestao = models.CharField(max_length=100, verbose_name="categoria")
-
-
-    def __str__(self):
-        return self.sugestao
 
 class Artigos(models.Model):
     titulo = models.CharField(max_length=100)
     categoria = models.CharField(max_length=100)
     conteudo = models.TextField()
     data_publicacao = models.DateTimeField(auto_now_add=True)
-    
+    sugestao = models.CharField(max_length=100, verbose_name="categoria")
+
     def __str__(self):
         return self.titulo
 
