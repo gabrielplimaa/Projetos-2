@@ -13,19 +13,11 @@ class Artigos(models.Model):
     def __str__(self):
         return self.titulo
 
-class Sugestao(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="suggested_readings")
-    article = models.ForeignKey(Artigos, on_delete=models.CASCADE, related_name="suggestions_for")
-    suggested_article = models.ForeignKey(Artigos, on_delete=models.CASCADE, related_name="suggested_in")
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ("article", "suggested_article", "user")
-
+class Bullets(models.Model):
+    artigo=models.ForeignKey(Artigos, on_delete=models.CASCADE, related_name="bullets")
+    bullets=models.TextField()
     def __str__(self):
-        if self.user:
-            return f"Sugestão para {self.user.username}: {self.suggested_article.title}"
-        return f"Sugestão: {self.suggested_article.title}"
+        return f"Bullets for {self.artigo.titulo}"
 
 
 class Progresso( models.Model):

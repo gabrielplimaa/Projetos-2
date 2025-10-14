@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.home_page, name='home'),
     # Caminho 2: A página de sugestão chama a view 'sugerir_leitura'.
     path('sugestao/<int:artigo_id>/', views.sugerir_leitura, name='sugestao'),
+    path('bullets/<int:artigo_id>/', views.bullets, name='bullets'),
 ]

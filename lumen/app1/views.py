@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Artigos, Sugestao, Progresso, Progresso_diario
+from .models import Artigos, Bullets, Progresso, Progresso_diario
 
 # Create your views here.
 
@@ -28,3 +28,8 @@ def home_page(request):
         'artigos_politica': artigos_politica, 
     }
     return render(request, 'app1/home.html', context)
+
+def bullets(request,artigo_id):
+    bullets=Artigos.objects.get(id=artigo_id).bullets.all()
+    context={'bullets':bullets}
+    return render(request,'bullets.html',context)
