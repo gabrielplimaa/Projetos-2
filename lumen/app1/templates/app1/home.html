@@ -1,0 +1,23 @@
+<div class="sidebar">
+                <h2 class="section-title">Política</h2>
+                <div class="post-list">
+                {% for artigo in artigos_politica %}
+                    <div class="post-item">
+                        <a href="#">{{ artigo.titulo }}</a>
+                    </div>
+                {% empty %}
+                    <p>Nenhuma notícia de política encontrada.</p>
+                {% endfor %}
+                </div>
+
+                <h2 class="section-title">Opinião</h2>
+                <div class="post-list">
+                {% for artigo in artigos_opiniao %}
+                    <div class="post-item">
+                         <a href="#">{{ artigo.titulo }}</a>
+                    </div>
+                {% empty %}
+                    <p>Nenhum artigo de opinião encontrado.</p>
+                {% endfor %}
+                </div>
+            </div>
