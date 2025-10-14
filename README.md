@@ -15,7 +15,6 @@
 </div>
 
 
-# Projetos 2 - Jornal do Commercio  
 
 ## 📰 Cliente  
 
