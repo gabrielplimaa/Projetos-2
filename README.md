@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="https://github.com/user-attachments/assets/dd006acb-f669-4065-9296-02432109d28c"  alt="LUMEN" width="500">
+  <img src="https://github.com/user-attachments/assets/dd006acb-f669-4065-9296-02432109d28c" alt="LUMEN" width="500">
 
   <h1>LUMEN</h1>
 
@@ -9,7 +9,7 @@
   </p>
 
   <a href="https://sites.google.com/cesar.school/lumen/home" target="_blank">
-    <img src="https://img.shields.io/badge/ACESSE%20O%20SITE-00cc00?style=for-the-badge&logoColor=white" alt="Acesse o site">
+    <img src="https://img.shields.io/badge/ACESSE%20O%20SITE-FFFF00?style=for-the-badge&logoColor=white" alt="Acesse o site">
   </a>
 
 </div>
