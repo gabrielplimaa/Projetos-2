@@ -1,0 +1,136 @@
+/* ESTILOS GERAIS E LAYOUT BASE                  */
+body {
+    /* Define uma fonte moderna e limpa, padrão em muitos sites */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0; /* Remove a margem padrão do navegador */
+    background-color: #f4f4f4; /* Um cinza bem claro para o fundo */
+    color: #333; /* Cor de texto principal (cinza escuro) */
+}
+
+a {
+    /* Define a cor padrão dos links e remove o sublinhado */
+    color: #0056b3;
+    text-decoration: none;
+}
+.container {
+    /* Um "container" que centraliza o conteúdo na página */
+    max-width: 1200px; /* Largura máxima do conteúdo */
+    margin: 0 auto; /* Centraliza o container na tela */
+    padding: 0 20px; /* Adiciona um respiro nas laterais */
+}
+/* CABEÇALHO (HEADER)                            */
+.main-header {
+    background-color: #ffffff; /* Fundo branco */
+    border-bottom: 1px solid #e0e0e0; /* Linha sutil de separação */
+    padding: 15px 0;
+    margin-bottom: 30px;
+}
+.main-header .container {
+    /* Usamos Flexbox para alinhar o logo e a navegação */
+    display: flex;
+    justify-content: space-between; /* Itens ficam nas extremidades */
+    align-items: center; /* Alinha verticalmente */
+}
+.logo-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #d90429; /* Vermelho forte, inspirado no JC */
+    margin: 0;
+}
+.main-nav a {
+    color: #333;
+    margin-left: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.main-nav a:hover {
+    color: #d90429; /* Link fica vermelho ao passar o mouse */
+}
+/* LAYOUT DE GRID PRINCIPAL                      */
+.grid-container {
+    display: grid;
+    /* Define duas colunas: a da esquerda (2.5fr) é maior que a da direita (1fr) */
+    grid-template-columns: 2.5fr 1fr;
+    gap: 30px; /* Espaço entre as colunas */
+}
+/* CARD DE NOTÍCIA (O componente mais importante) */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px; /* Bordas levemente arredondadas */
+    overflow: hidden; /* Garante que a imagem não "vaze" do card */
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Itens dentro do card ficam em coluna */
+}
+.card img {
+    width: 100%; /* Imagem ocupa toda a largura do card */
+    height: auto;
+    display: block; /* Remove espaços extras abaixo da imagem */
+}
+.card-content {
+    padding: 20px;
+}
+.card-category {
+    display: inline-block;
+    color: #d90429;
+    font-weight: 700; /* Mais "gordo" que bold normal */
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+.card-title {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.card-title a {
+    color: #111; /* Título quase preto para dar destaque */
+    transition: color 0.2s; /* Efeito suave na mudança de cor */
+}
+.card-title a:hover {
+    color: #d90429;
+}
+.card-summary {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5; /* Espaçamento entre linhas, para melhor leitura */
+}
+/* Estilo específico para a grande manchete */
+.card-manchete .card-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+}
+/* Grid para a seção "Mais Recentes" */
+.recent-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas de tamanho igual */
+    gap: 20px;
+}
+/* BARRA LATERAL (SIDEBAR)                       */
+.sidebar .section-title {
+    margin-top: 0;
+}
+
+.card-sidebar {
+    border-top: 4px solid #d90429;
+}
+.card-sidebar .card-content {
+    padding: 15px;
+}
+.card-sidebar .card-title a {
+    font-size: 1.1rem;
+}
+/* TÍTULOS DE SEÇÃO E RODAPÉ                     */
+.section-title {
+    font-size: 1.6rem;
+    border-bottom: 3px solid #111;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+.main-footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 40px;
+}
