@@ -9,11 +9,10 @@
   </p>
 
   <a href="https://sites.google.com/cesar.school/lumen/home" target="_blank">
-    <img src="https://img.shields.io/badge/ACESSE%20O%20SITE-FFFF00?style=for-the-badge&logoColor=white" alt="Acesse o site">
+    <img src="https://img.shields.io/badge/ACESSE%20O%20SITE-FFD700?style=for-the-badge&logoColor=white" alt="Acesse o site">
   </a>
 
 </div>
-
 
 
 ## 📰 Cliente  
