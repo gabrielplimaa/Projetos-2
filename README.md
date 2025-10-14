@@ -1,10 +1,29 @@
+<div align="center">
+
+  <img src="https://github.com/user-attachments/assets/dd006acb-f669-4065-9296-02432109d28c"  alt="LUMEN" width="500">
+
+  <h1>LUMEN</h1>
+
+  <p>
+    Projeto <strong>LUMEN</strong> — Laboratório de Usabilidade, Métricas e Engajamento em Notícias.
+  </p>
+
+  <a href="https://sites.google.com/cesar.school/lumen/home" target="_blank">
+    <img src="https://img.shields.io/badge/ACESSE%20O%20SITE-00cc00?style=for-the-badge&logoColor=white" alt="Acesse o site">
+  </a>
+
+</div>
+
+
 # Projetos 2 - Jornal do Commercio  
 
-(Descrição)
+## 📰 Cliente  
+
+-O Jornal do Commercio é um dos veículos de comunicação mais tradicionais do Nordeste. Fundado em 1919, acumula mais de um século de história acompanhando as transformações políticas, econômicas, sociais e culturais do Brasil e do mundo.
 
 ## 🎯 Objetivo  
 
-## 📰 Conteúdo  
+- Nosso objetivo é desenvolver soluções que melhorem a experiência de navegação e fortaleçam a fidelidade dos leitores ao portal do Jornal do Commercio, com base em design centrado no usuário, usabilidade e métricas de engajamento.
 
 ## 🛠️ Tecnologias e Ferramentas 
 - Softwares de diagramação: *Figma, Canva*.  
