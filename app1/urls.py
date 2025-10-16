@@ -7,4 +7,5 @@ urlpatterns = [
     # Caminho 2: A página de sugestão chama a view 'sugerir_leitura'.
     path('sugestao/<int:artigo_id>/', views.sugerir_leitura, name='sugestao'),
     path('bullets/<int:artigo_id>/', views.bullets, name='bullets'),
+    path('artigo/<int:artigo_id>/audio/', views.artigo_audio, name='artigo_audio'),
 ]

@@ -1,6 +1,9 @@
+from django.http import FileResponse
 from django.shortcuts import render
 from .models import Artigos, Bullets, Progresso, Progresso_diario
-
+from django.shortcuts import get_object_or_404
+from gtts import gTTS #tem que baixar essa biblioteca do google
+import io #manipulação de arquivos em memoria ram
 # Create your views here.
 
 def sugerir_leitura(request, artigo_id):
@@ -33,3 +36,15 @@ def bullets(request,artigo_id):
     bullets=Artigos.objects.get(id=artigo_id).bullets.all()
     context={'bullets':bullets}
     return render(request,'bullets.html',context)
+
+def artigo_audio(request, artigo_id): #tem que adaptar no html pegando a tag audio e botando a url que aponta pra essa view
+    artigo = get_object_or_404(Artigos,id=artigo_id)
+    texto = artigo.conteudo
+    tts = gTTS(text=texto, lang='pt',slow=False)
+    buffer = io.BytesIO()
+    tts.write_to_fp(buffer)
+    buffer.seek(0)
+    return FileResponse(buffer,content_type='audio/mpeg')
+    
+    # n salva o audio no banco de dados, gera na hora e manda pro usuario, salvando no buffer, que é um arquivo em memoria ram(memoria volátil)
+    #quando o usuario fecha a pagina, o audio some, n fica salvo no servidor
