@@ -8,7 +8,6 @@ class Artigos(models.Model):
     categoria = models.CharField(max_length=100)
     conteudo = models.TextField()
     data_publicacao = models.DateTimeField(auto_now_add=True)
-    sugestao = models.CharField(max_length=100, verbose_name="categoria")
 
     def __str__(self):
         return self.titulo
