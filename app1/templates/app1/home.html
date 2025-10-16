@@ -34,7 +34,7 @@
                     <span class="card-category">{{ manchete_principal.categoria }}</span>
                     <h2 class="card-title"><a href="#">{{ manchete_principal.titulo }}</a></h2>
                     <p class="card-summary">{{ manchete_principal.resumo }}</p>
-                <button class="read-more" href="{%url 'sugestao'%}"> sugestões de Leitura</button>
+                <button class="read-more" href="{%url 'sugestao' manchete_principal.id %}"> sugestões de Leitura</button>
                 </div>
             </article>
             {% endif %}
