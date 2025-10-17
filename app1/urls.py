@@ -8,4 +8,8 @@ urlpatterns = [
     path('sugestao/<int:artigo_id>/', views.sugerir_leitura, name='sugestao'),
     path('bullets/<int:artigo_id>/', views.bullets, name='bullets'),
     path('artigo/<int:artigo_id>/audio/', views.artigo_audio, name='artigo_audio'),
+    path('politica/', views.topico_politica, name='topico_politica'),
+    path('pernambuco/', views.topico_pernambuco, name='topico_pernambuco'),
+    path('esportes/', views.topico_esportes, name='topico_esportes'),
+    path('cultura/', views.topico_cultura, name='topico_cultura'),
 ]
