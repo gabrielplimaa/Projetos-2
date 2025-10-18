@@ -37,7 +37,7 @@ def bullets(request,artigo_id):
     context={'bullets':bullets}
     return render(request,'app1/bullets.html',context)
 
-def artigo_audio(request, artigo_id): #tem que adaptar no html pegando a tag audio e botando a url que aponta pra essa view
+def artigo_audio(request, artigo_id): 
     artigo = get_object_or_404(Artigos,id=artigo_id)
     texto = artigo.conteudo
     tts = gTTS(text=texto, lang='pt',slow=False)
@@ -49,7 +49,7 @@ def artigo_audio(request, artigo_id): #tem que adaptar no html pegando a tag aud
     # n salva o audio no banco de dados, gera na hora e manda pro usuario, salvando no buffer, que é um arquivo em memoria ram(memoria volátil)
     #quando o usuario fecha a pagina, o audio some, n fica salvo no servidor
 
-#fazendo o caminho para as paginas dos topicos:
+
 def topico_politica(request):
     artigos_politica = Artigos.objects.filter(categoria='Política').order_by('-data_publicacao')
     context = {'artigos_politica': artigos_politica}
@@ -70,7 +70,7 @@ def topico_cultura(request):
     context = {'artigos_cultura': artigos_cultura}
     return render(request, 'app1/topico_cultura.html', context)
 
-#view para exibir o artigo completo
+
 def exibir_artigo(request, artigo_id):
     artigo=get_object_or_404(Artigos, id=artigo_id)
     context={'artigo':artigo}
