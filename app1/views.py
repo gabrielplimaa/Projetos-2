@@ -12,7 +12,7 @@ def sugerir_leitura(request, artigo_id):
     categoria=artigo_atual.categoria
     sugestoes=Artigos.objects.order_by('-data_publicacao').filter(categoria=categoria).exclude(id=artigo_atual_id)[:5]
     context={'artigo_atual':artigo_atual,'sugestoes':sugestoes}
-    return render(request,'sugestao.html',context)
+    return render(request,'app1/sugestao.html',context)
 
 def home_page(request):
     manchete_principal = Artigos.objects.order_by('-data_publicacao').first()
@@ -35,7 +35,7 @@ def home_page(request):
 def bullets(request,artigo_id):
     bullets=Artigos.objects.get(id=artigo_id).bullets.all()
     context={'bullets':bullets}
-    return render(request,'bullets.html',context)
+    return render(request,'app1/bullets.html',context)
 
 def artigo_audio(request, artigo_id): #tem que adaptar no html pegando a tag audio e botando a url que aponta pra essa view
     artigo = get_object_or_404(Artigos,id=artigo_id)
@@ -69,3 +69,9 @@ def topico_cultura(request):
     artigos_cultura = Artigos.objects.filter(categoria='Cultura').order_by('-data_publicacao')
     context = {'artigos_cultura': artigos_cultura}
     return render(request, 'app1/topico_cultura.html', context)
+
+#view para exibir o artigo completo
+def exibir_artigo(request, artigo_id):
+    artigo=get_object_or_404(Artigos, id=artigo_id)
+    context={'artigo':artigo}
+    return render(request, 'app1/exibir_artigo.html', context)
