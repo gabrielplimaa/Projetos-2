@@ -1,3 +1,7 @@
+<audio controls>
+    <source src="{% url 'artigo_audio' artigo.id %}" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+</audio>
 <h1>{{ artigo.titulo }}</h1>
 <p>{{ artigo.conteudo }}</p>
 <a class="read-more" href="{% url 'sugestao' artigo.id %}">
