@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tópico: Política</title>
+    <link rel="stylesheet" href="{% static 'caminho/para/seuarquivo.css' %}">
+</head>
+<body>
+    
+    <header class="main-header">
+        <div class="container">
+            <h1 class="logo-text">Política</h1>
+            <nav class="main-nav">
+                <a href="{% url 'topico_pernambuco' %}">Pernambuco</a>
+                <a href="{% url 'topico_esportes' %}">Esportes</a>
+                <a href="{% url 'topico_cultura' %}">Cultura</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Análises e Notícias de Política</h2>
+
+        {% if artigos_politica %}
+            {% for artigo in artigos_politica %}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-category">POLÍTICA</span>
+                        
+                        <h3 class="card-title">
+                            <a href="{% url 'exibir_artigo' artigo.id %}">
+                                {{ artigo.titulo }}
+                            </a>
+                        </h3>
+                        
+                        <p class="card-summary">
+                            {{ artigo.conteudo|truncatechars:250 }}
+                        </p>
+
+                        <span class="card-date">
+                            Publicado em: {{ artigo.data_publicacao|date:"d/m/Y H:i" }}
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card">
+                <div class="card-content">
+                    <h2>Nenhum Artigo de Política Encontrado</h2>
+                    <p>Não há conteúdo publicado nesta categoria no momento.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; {% now "Y" %} Seu Site. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

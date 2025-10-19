@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pontos Chave do Artigo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        ul {
+            list-style: disc; /* Estilo padrão de bullet points */
+            margin-left: 20px;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        {% if bullets %}
+            <h1>Pontos Chave do Artigo: "{{ bullets.first.artigo.titulo }}"</h1>
+            
+            <ul>
+                {% for bullet in bullets %}
+                    <li>{{ bullet.bullets }}</li>
+                {% endfor %}
+            </ul>
+        
+        {% else %}
+            <h1>Nenhum Ponto Chave Encontrado</h1>
+            <p>Este artigo ainda não possui pontos chave registrados.</p>
+            
+            {% endif %}
+    </div>
+
+</body>
+</html>

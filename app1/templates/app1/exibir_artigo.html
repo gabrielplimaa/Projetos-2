@@ -4,6 +4,9 @@
 </audio>
 <h1>{{ artigo.titulo }}</h1>
 <p>{{ artigo.conteudo }}</p>
-<a class="read-more" href="{% url 'sugestao' artigo.id %}">
+<h2><a class="read-more" href="{% url 'sugestao' artigo.id %}">
     Sugestões de Leitura
-</a>
+</a></h2>
+<h2><a class="read-more" href="{% url 'bullets' artigo.id %}">
+    Ver Pontos Chave
+</a></h2>
