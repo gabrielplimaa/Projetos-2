@@ -276,3 +276,131 @@ a:hover {
     border-top: 1px solid #e0e0e0;
     font-size: 0.85rem;
 }
+/* Estilos específicos para o conteúdo do artigo */
+.article-content {
+    background-color: #fff; /* Fundo branco para a área do artigo */
+    padding: 40px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+/* Estilo para o bloco de áudio */
+.article-content audio {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Título do Artigo (H1) */
+.article-content h1 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    color: #111;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+/* Corpo do Conteúdo */
+.article-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Links de Ação (Sugestões/Pontos Chave) */
+.article-actions {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px dashed #ccc;
+}
+
+.article-actions h2 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+/* Estiliza a classe "read-more" */
+.article-actions .read-more {
+    color: #d90429;
+    font-weight: bold;
+    display: inline-block;
+    padding: 5px 0;
+}
+
+.article-actions .read-more:hover {
+    text-decoration: underline;
+}
+/* Estilos específicos para a seção de sugestões */
+.sugestoes-box {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.sugestoes-box h3 {
+    /* Estilo semelhante ao section-title, mas menor */
+    font-size: 1.4rem;
+    color: #111;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.sugestoes-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sugestoes-box li {
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #eee;
+    padding-bottom: 10px;
+}
+
+.sugestoes-box li a {
+    font-weight: 500;
+    color: #333;
+    font-size: 1rem;
+}
+
+.sugestoes-box li a:hover {
+    color: #d90429;
+}
+
+.sugestoes-box small {
+    display: block;
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* Aplica o estilo de conteúdo de artigo ao bloco principal */
+.artigo-principal {
+    background-color: #fff; 
+    padding: 40px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 0; /* Removido, pois a sugestão fica abaixo */
+}
+
+.artigo-principal h1 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    color: #111;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.artigo-principal p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 20px;
+}

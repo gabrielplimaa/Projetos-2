@@ -1,50 +1,72 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ artigo_atual.titulo }} | Detalhe do Artigo</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
-        .artigo-principal { border-bottom: 2px solid #ccc; padding-bottom: 20px; margin-bottom: 30px; }
-        .sugestoes-box { border: 1px solid #eee; padding: 15px; background-color: #f9f9f9; }
-        .sugestoes-box h3 { margin-top: 0; color: #333; }
-        .sugestoes-box ul { list-style: none; padding: 0; }
-        .sugestoes-box li { margin-bottom: 10px; border-bottom: 1px dotted #ddd; padding-bottom: 5px; }
-        .sugestoes-box a { text-decoration: none; color: #007bff; font-weight: bold; }
-        .sugestoes-box a:hover { text-decoration: underline; }
-    </style>
+    <link rel="stylesheet" href="{% static 'app1/css/style.css' %}">
+
+
 </head>
 <body>
 
-    <div class="artigo-principal">
-        <h1>{{ artigo_atual.titulo }}</h1>
-        <p><strong>Categoria:</strong> {{ artigo_atual.categoria }}</p>
-        <p><strong>Publicado em:</strong> {{ artigo_atual.data_publicacao|date:"d/m/Y H:i" }}</p>
-        
-        <div class="conteudo">
-            {{ artigo_atual.conteudo|linebreaks }}
-            </div>
-    </div>
+    <header class="main-header">
+        <div class="container">
+            <h1 class="logo-text">JC</h1>
+            <nav class="main-nav">
+                <a href="{% url 'home' %}">home</a>
+                <a href="{% url 'topico_pernambuco' %}">Pernambuco</a>
+                <a href="{% url 'topico_politica' %}">Política</a>
+                <a href="{% url 'topico_esportes' %}">Esportes</a>
+                <a href="{% url 'topico_cultura' %}">Cultura</a>
+            </nav>
+        </div>
+    </header>
 
-    <div class="sugestoes-box">
-        <h3>Sugestões de Leitura (Categoria: {{ artigo_atual.categoria }})</h3>
+    <main class="container">
         
-        {% if sugestoes %}
-            <ul>
-                {% for artigo in sugestoes %}
-                <li>
-                    <a href="{% url 'sugestao' artigo.pk %}">
-                        {{ artigo.titulo }}
-                    </a> 
-                    <small>({{ artigo.data_publicacao|date:"d/m/Y" }})</small>
-                </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Não há mais artigos recentes nesta categoria para sugerir.</p>
-        {% endif %}
-    </div>
+        <div class="artigo-principal">
+            
+            <p class="card-date">
+                <strong>Categoria:</strong> {{ artigo_atual.categoria }}
+                <br>
+                <strong>Publicado em:</strong> {{ artigo_atual.data_publicacao|date:"d/m/Y H:i" }}
+            </p>
+            
+            <h1>{{ artigo_atual.titulo }}</h1>
+            
+            <div class="conteudo">
+                {{ artigo_atual.conteudo|linebreaks|safe }} 
+            </div>
+        </div>
+
+        <div class="sugestoes-box">
+            <h3>Sugestões de Leitura (Categoria: {{ artigo_atual.categoria }})</h3>
+            
+            {% if sugestoes %}
+                <ul>
+                    {% for artigo in sugestoes %}
+                    <li>
+                        <a href="{% url 'sugestao' artigo.pk %}">
+                            {{ artigo.titulo }}
+                        </a> 
+                        <small>({{ artigo.data_publicacao|date:"d/m/Y" }})</small>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Não há mais artigos recentes nesta categoria para sugerir.</p>
+            {% endif %}
+        </div>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; {% now "Y" %} JCPM. Reconstruído para fins acadêmicos.</p>
+        </div>
+    </footer>
 
 </body>
 </html>
