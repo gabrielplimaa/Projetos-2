@@ -1,19 +1,22 @@
 <div align="center">
 
-  <img src="https://github.com/user-attachments/assets/dd006acb-f669-4065-9296-02432109d28c" alt="LUMEN" width="500">
+  <a href="https://sites.google.com/cesar.school/lumen/home" target="_blank">
+    <img src="https://github.com/user-attachments/assets/dd006acb-f669-4065-9296-02432109d28c" alt="LUMEN" width="450">
+  </a>
 
-  <h1>LUMEN</h1>
+  <br><br>
+  <hr style="width:70%; border: 1px solid #333;">
+  <br>
 
   <p>
-    Projeto <strong>LUMEN</strong> — Laboratório de Usabilidade, Métricas e Engajamento em Notícias.
+    <strong>Projeto LUMEN</strong> — Laboratório de Usabilidade, Métricas e Engajamento em Notícias.
   </p>
 
   <a href="https://sites.google.com/cesar.school/lumen/home" target="_blank">
-    <img src="https://img.shields.io/badge/ACESSE%20O%20SITE-FFD700?style=for-the-badge&logoColor=white" alt="Acesse o site">
+    <img src="https://img.shields.io/badge/ACESSE%20O%20SITE-FFD700?style=for-the-badge&logoColor=black" alt="Acesse o site">
   </a>
 
 </div>
-
 
 ## 📰 Cliente  
 
@@ -27,9 +30,7 @@
 - Softwares de diagramação: *Figma, Canva*.  
 - Ferramentas de colaboração: *GitHub, Trello, Miro*.  
 
-## 📂 Estrutura do Repositório  
-
-## 👥 Equipe / Autoria   
+## 👥 Equipe
 
 - Orientador/Professor: **Eduardo Nascimento de Arruda**  
 - Membros:
@@ -45,3 +46,6 @@
 - *Pedro XavierGama Tenório Canel*
 - *Rafael Coutinho Lima*            
 ---
+
+
+## 📂 Estrutura do Repositório  
