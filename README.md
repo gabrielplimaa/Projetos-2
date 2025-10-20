@@ -4,10 +4,6 @@
     <img src="https://github.com/user-attachments/assets/dd006acb-f669-4065-9296-02432109d28c" alt="LUMEN" width="500">
   </a>
 
-  <br><br>
-   <hr style="width:60%; border: 1px solid #333; margin-top: 10px; margin-bottom: 15px;">
-  <br>
-
   <p>
     <strong>Projeto LUMEN</strong> — Laboratório de Usabilidade, Métricas e Engajamento em Notícias.
   </p>
