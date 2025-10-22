@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read 
+      contents: read # Required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -23,17 +23,24 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      # ✅ Cria ambiente virtual e instala dependências
+      - name: Create virtual environment and install dependencies
+        run: |
+          python -m venv antenv
+          source antenv/bin/activate
+          pip install -r requirements.txt
 
-      - name: Cleaning testing files
+      # 🧹 Remove arquivos desnecessários antes do deploy
+      - name: Clean unnecessary files
         run: |
           rm -f db.sqlite3
           rm -f .env
 
+      # 📦 Compacta o app (gera release.zip)
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./
+        run: zip -r release.zip ./* -x "antenv/*"
 
+      # ⬆️ Envia o artefato pro próximo job
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
@@ -53,6 +60,10 @@ jobs:
         with:
           name: python-app
 
+      # 🧾 Lista pra confirmar que o release.zip foi baixado
+      - name: Check artifact
+        run: ls -R
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -60,8 +71,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_114A337D71554EA380E122C848FFB05F }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B224687249BE41CEBC7D37376D044432 }}
 
+      # 🚀 Faz o deploy usando o zip baixado
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'jcprojeto'  # Nome do seu Web App no Azure
-          package: release.zip
+          app-name: 'jcprojeto'
+          slot-name: 'Production'
+          package: python-app/release.zip
