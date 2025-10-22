@@ -1,3 +1,5 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
 name: Build and deploy Python app to Azure Web App - jcprojeto
 
@@ -61,5 +63,5 @@ jobs:
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'jcprojeto'  # 🔹 Nome do seu Web App no Azure
+          app-name: 'jcprojeto'  # Nome do seu Web App no Azure
           package: release.zip
