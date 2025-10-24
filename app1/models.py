@@ -40,7 +40,8 @@ class Progresso_diario(models.Model):
     visitante = models.CharField(max_length=100, null=True, blank=True)
     data = models.DateField(auto_now_add=True)
     artigos_lidos = models.IntegerField(default=0)
-
+    class Meta:
+        unique_together = ("visitante", "data")
     def __str__(self):
         return f"{self.visitante} - {self.data} - {self.artigos_lidos} artigos lidos"
 

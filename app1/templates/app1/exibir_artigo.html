@@ -6,7 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ artigo.titulo }}</title>
     <link rel="stylesheet" href="{% static 'app1/css/style.css' %}">
-    
+
+    <style>
+        /* Banner discreto no topo direito */
+        .banner-engajamento {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #f0f8ff;
+            color: #31708f;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .banner-engajamento.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .banner-engajamento {
+                top: 10px;
+                right: 50%;
+                transform: translateX(50%) translateY(-20px);
+                font-size: 13px;
+                padding: 10px 16px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -22,6 +56,13 @@
             </nav>
         </div>
     </header>
+
+    <!-- Banner de engajamento -->
+    {% if mensagem %}
+    <div id="banner" class="banner-engajamento">
+        {{ mensagem }}
+    </div>
+    {% endif %}
 
     <main class="container">
         
@@ -60,6 +101,23 @@
             <p>&copy; {% now "Y" %} JCPM. Reconstruído para fins acadêmicos.</p>
         </div>
     </footer>
+
+    <script>
+        // Mostra o banner com animação
+        document.addEventListener("DOMContentLoaded", function() {
+            const banner = document.getElementById("banner");
+            if (banner) {
+                setTimeout(() => {
+                    banner.classList.add("show");
+                }, 200);
+
+                // Opcional: esconde o banner após 5 segundos
+                setTimeout(() => {
+                    banner.classList.remove("show");
+                }, 5200);
+            }
+        });
+    </script>
 
 </body>
 </html>

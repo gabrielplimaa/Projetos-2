@@ -1,6 +1,6 @@
 from django.http import FileResponse
 from django.shortcuts import render
-from .models import Artigos, Bullets, Progresso, Progresso_diario
+from .models import Artigos, Progresso_diario
 from django.shortcuts import get_object_or_404
 from gtts import gTTS #tem que baixar essa biblioteca do google
 import io #manipulação de arquivos em memoria ram
@@ -74,5 +74,19 @@ def topico_cultura(request):
 
 def exibir_artigo(request, artigo_id):
     artigo=get_object_or_404(Artigos, id=artigo_id)
-    context={'artigo':artigo}
+    hoje=timezone.now().date()
+    visitante = request.META.get('REMOTE_ADDR', 'anonimo')
+    diario,created=Progresso_diario.objects.get_or_create(data=hoje, visitante=visitante)
+    if 'artigos_lidos' not in request.session:
+        request.session['artigos_lidos'] = []
+    if artigo_id not in request.session['artigos_lidos']:
+        diario.artigos_lidos += 1
+        diario.save()
+        request.session['artigos_lidos'].append(artigo_id)
+        request.session.modified = True
+    mensagem=""
+    artigo_lidos_na_sessao=len(request.session['artigos_lidos'])
+    if artigo_lidos_na_sessao>1:
+        mensagem=f"Você leu {artigo_lidos_na_sessao} artigos nesta sessão."
+    context={'artigo':artigo, 'mensagem':mensagem}
     return render(request, 'app1/exibir_artigo.html', context)
