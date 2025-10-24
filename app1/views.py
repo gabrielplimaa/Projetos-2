@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from gtts import gTTS #tem que baixar essa biblioteca do google
 import io #manipulação de arquivos em memoria ram
 # Create your views here.
+from django.utils import timezone
 
 def sugerir_leitura(request, artigo_id):
     artigo_atual_id =artigo_id

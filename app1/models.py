@@ -37,7 +37,7 @@ class Progresso( models.Model):
 
 
 class Progresso_diario(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="daily_progress")
+    visitante = models.CharField(max_length=100, null=True, blank=True)
     data = models.DateField(auto_now_add=True)
     artigos_lidos = models.IntegerField(default=0)
 
