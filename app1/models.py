@@ -41,11 +41,8 @@ class Progresso_diario(models.Model):
     data = models.DateField(auto_now_add=True)
     artigos_lidos = models.IntegerField(default=0)
 
-    class Meta:
-        unique_together = ("user", "data")
-
     def __str__(self):
-        return f"{self.user.username} - Progresso diário em {self.data}"
+        return f"{self.visitante} - {self.data} - {self.artigos_lidos} artigos lidos"
 
     
     
