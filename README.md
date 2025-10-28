@@ -1,7 +1,7 @@
 <div align="center">
 
   <a href="https://sites.google.com/cesar.school/lumen/home" target="_blank">
-    <img src="https://github.com/user-attachments/assets/dd006acb-f669-4065-9296-02432109d28c" alt="LUMEN" width="500">
+    <img src="https://github.com/user-attachments/assets/57a8f755-e45a-4c4f-9758-87e3a0f36606" alt="LUMEN" width="500">
   </a>
 
   <p>
