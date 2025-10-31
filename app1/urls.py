@@ -13,4 +13,5 @@ urlpatterns = [
     path('esportes/', views.topico_esportes, name='topico_esportes'),
     path('cultura/', views.topico_cultura, name='topico_cultura'),
     path('artigo/<int:artigo_id>/',views.exibir_artigo, name='exibir_artigo'),
+    path('artigo/<int:id_artigo>/contexto/', views.conteudo_de_contexto, name='conteudo_de_contexto'),
 ]

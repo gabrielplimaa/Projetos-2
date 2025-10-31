@@ -6,6 +6,7 @@ from gtts import gTTS #tem que baixar essa biblioteca do google
 import io #manipulação de arquivos em memoria ram
 # Create your views here.
 from django.utils import timezone
+from app1.utils.ai import gerar_contexto
 
 def sugerir_leitura(request, artigo_id):
     artigo_atual_id =artigo_id
@@ -90,3 +91,9 @@ def exibir_artigo(request, artigo_id):
         mensagem=f"Você leu {artigo_lidos_na_sessao} artigos nesta sessão."
     context={'artigo':artigo, 'mensagem':mensagem}
     return render(request, 'app1/exibir_artigo.html', context)
+
+def conteudo_de_contexto(request,id_artigo):
+    artigo=Artigos.objects.get(id=id_artigo)
+    contexto_gerado=gerar_contexto(artigo.conteudo)
+    context={'artigo':artigo,'contexto_gerado':contexto_gerado}
+    return render(request,'app1/conteudo_de_contexto.html',context)

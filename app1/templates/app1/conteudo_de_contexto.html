@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entenda o Contexto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+        ul {
+            list-style: disc;
+            margin-left: 20px;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: #1a73e8;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>{{ artigo.titulo }}</h1>
+        <p>{{ artigo.conteudo }}</p>
+
+        {% if contexto_gerado.links %}
+            <h2>{{ contexto_gerado.secao }}</h2>
+            <ul>
+                {% for link in contexto_gerado.links %}
+                    <li>
+                        <a href="{{ link.url }}" target="_blank">{{ link.titulo }}</a>
+                        <p>{{ link.descricao }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h2>Nenhum contexto adicional encontrado</h2>
+            <p>Este artigo ainda não possui links sugeridos pela IA.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
