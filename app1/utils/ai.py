@@ -100,7 +100,7 @@ TEXTO:
     model = genai.GenerativeModel("models/gemini-2.5-flash")
 
     try:
-        # 🧩 Tenta gerar resposta em formato JSON puro
+       
         resposta = model.generate_content(
             prompt,
             generation_config={"response_mime_type": "application/json"}
@@ -109,14 +109,14 @@ TEXTO:
         return json.loads(conteudo)
 
     except Exception as e:
-        # ⚠️ Se falhar (modelo não retorna JSON puro ou erro de parsing), tenta limpar
+        
         print("⚠️ Erro no modo JSON nativo:", e)
 
-        # Gera no modo texto normal
+        
         resposta = model.generate_content(prompt)
         conteudo = resposta.text.strip()
 
-        # 🧼 Extrai apenas o bloco JSON se houver texto extra
+       
         match = re.search(r'\{.*\}', conteudo, re.DOTALL)
         conteudo_limpo = match.group(0) if match else conteudo
 
