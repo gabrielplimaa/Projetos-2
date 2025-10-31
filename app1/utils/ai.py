@@ -4,6 +4,7 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 import json
+import re
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -61,32 +62,75 @@ def gerar_gpt(texto: str):
     }
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-def gerar_contexto(texto: str) ->dict:
+def gerar_contexto(texto: str) -> dict:
     """
-    Gera links de contexto relacionados ao tema do texto (usando o Gemini).
-    Retorna um dicionário com uma lista de links.
-    """
-    prompt = f"""
-    Analise o seguinte texto e gere uma seção 'Entenda o Contexto' com até 3 links de materiais complementares.
-    Retorne no formato JSON com os campos: 
-    - secao (string)
-    - links (lista de objetos com titulo, url e descricao)
-    Texto:
-    {texto}
+    Gera uma seção 'Entenda o Contexto' com até 3 links de materiais complementares,
+    usando o modelo Gemini em modo JSON nativo, com fallback seguro.
     """
 
-    model = genai.GenerativeModel("gemini-1.5-flash")  # mais rápido e gratuito
-    resposta = model.generate_content(prompt)
+    prompt = f"""
+Você é um assistente de curadoria de conteúdo jornalístico.  
+Analise o texto abaixo e gere uma seção chamada **"Entenda o Contexto"**, que traga até **3 links de materiais complementares** que ajudem o leitor a compreender melhor o tema central do texto.
+
+Os materiais devem:
+- Explicar conceitos técnicos, históricos, políticos ou econômicos citados no texto.
+- Ser **reais e confiáveis** (portais de notícia, sites do governo, universidades, Wikipedia).
+- Ter **URLs verdadeiras** e acessíveis.
+- Não repetir o mesmo tipo de material.
+- Se não houver material confiável suficiente, gere apenas os que fizerem sentido.
+
+Formato de saída (JSON válido):
+{{
+  "secao": "Entenda o Contexto",
+  "links": [
+    {{
+      "titulo": "Título descritivo do material",
+      "url": "https://exemplo.com/link",
+      "descricao": "Breve explicação (1 frase) sobre o que o leitor aprenderá nesse material."
+    }}
+  ]
+}}
+
+Agora analise o texto e gere a resposta conforme o formato acima.
+
+TEXTO:
+{texto}
+"""
+
+    model = genai.GenerativeModel("models/gemini-2.5-flash")
 
     try:
+        # 🧩 Tenta gerar resposta em formato JSON puro
+        resposta = model.generate_content(
+            prompt,
+            generation_config={"response_mime_type": "application/json"}
+        )
         conteudo = resposta.text.strip()
         return json.loads(conteudo)
-    except Exception:
-        # Caso o Gemini não retorne JSON válido, retorna texto simples
-        return {
-            "secao": "Entenda o Contexto",
-            "links": [
-                {"titulo": "O que é Reforma Tributária", "url": "https://www.gov.br/receitafederal/pt-br/assuntos/reforma-tributaria", "descricao": "Explicação oficial da Receita Federal sobre a reforma tributária."},
-                {"titulo": "Como funciona o Congresso Nacional", "url": "https://www12.senado.leg.br/noticias/entenda-o-congresso", "descricao": "Guia rápido do Senado sobre o funcionamento do Congresso."},
-            ],
-        }
+
+    except Exception as e:
+        # ⚠️ Se falhar (modelo não retorna JSON puro ou erro de parsing), tenta limpar
+        print("⚠️ Erro no modo JSON nativo:", e)
+
+        # Gera no modo texto normal
+        resposta = model.generate_content(prompt)
+        conteudo = resposta.text.strip()
+
+        # 🧼 Extrai apenas o bloco JSON se houver texto extra
+        match = re.search(r'\{.*\}', conteudo, re.DOTALL)
+        conteudo_limpo = match.group(0) if match else conteudo
+
+        try:
+            return json.loads(conteudo_limpo)
+        except Exception:
+            print("⚠️ Resposta não JSON:", conteudo)
+            return {
+                "secao": "Entenda o Contexto",
+                "links": [
+                    {
+                        "titulo": "Conteúdo não disponível",
+                        "url": "",
+                        "descricao": "Não foi possível gerar links de contexto."
+                    }
+                ]
+            }
