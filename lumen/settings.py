@@ -125,3 +125,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 load_dotenv()
 OPENAI_KEY = os.getenv('OPENAI_KEY')
+GEMINI_KEY = os.getenv('GEMINI_KEY')

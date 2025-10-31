@@ -1,12 +1,14 @@
 from openai import OpenAI
 from duckduckgo_search import DDGS
 import os
+import google.generativeai as genai
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def gerar_contexto(texto: str):
+def gerar_gpt(texto: str):
     """
     Dada uma matéria jornalística, retorna links reais
     para explicações contextuais sobre o tema.
@@ -57,3 +59,34 @@ def gerar_contexto(texto: str):
         "secao": "Entenda o Contexto",
         "links": links_reais
     }
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+def gerar_contexto(texto: str) ->dict:
+    """
+    Gera links de contexto relacionados ao tema do texto (usando o Gemini).
+    Retorna um dicionário com uma lista de links.
+    """
+    prompt = f"""
+    Analise o seguinte texto e gere uma seção 'Entenda o Contexto' com até 3 links de materiais complementares.
+    Retorne no formato JSON com os campos: 
+    - secao (string)
+    - links (lista de objetos com titulo, url e descricao)
+    Texto:
+    {texto}
+    """
+
+    model = genai.GenerativeModel("gemini-1.5-flash")  # mais rápido e gratuito
+    resposta = model.generate_content(prompt)
+
+    try:
+        conteudo = resposta.text.strip()
+        return json.loads(conteudo)
+    except Exception:
+        # Caso o Gemini não retorne JSON válido, retorna texto simples
+        return {
+            "secao": "Entenda o Contexto",
+            "links": [
+                {"titulo": "O que é Reforma Tributária", "url": "https://www.gov.br/receitafederal/pt-br/assuntos/reforma-tributaria", "descricao": "Explicação oficial da Receita Federal sobre a reforma tributária."},
+                {"titulo": "Como funciona o Congresso Nacional", "url": "https://www12.senado.leg.br/noticias/entenda-o-congresso", "descricao": "Guia rápido do Senado sobre o funcionamento do Congresso."},
+            ],
+        }
