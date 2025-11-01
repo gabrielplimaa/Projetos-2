@@ -15,7 +15,7 @@ def gerar_gpt(texto: str):
     para explicações contextuais sobre o tema.
     """
 
-    # Pedir ao GPT os conceitos relevantes
+    
     prompt = f"""
     Abaixo está o texto de uma matéria jornalística.
     Identifique de 2 a 3 conceitos importantes que um leitor
@@ -39,11 +39,11 @@ def gerar_gpt(texto: str):
 
     conteudo = resposta.choices[0].message.content
 
-    # Extrair os tópicos sugeridos
+    
     linhas = [l.strip("- ").strip() for l in conteudo.split("\n") if l.strip()]
     perguntas = [l.split(": ")[-1] for l in linhas if l.lower().startswith("pergunta")]
 
-    # Buscar links reais na web para cada tópico
+    
     links_reais = []
     with DDGS() as ddgs:
         for pergunta in perguntas:
@@ -55,7 +55,7 @@ def gerar_gpt(texto: str):
                     "descricao": resultado["body"]
                 })
 
-    # Montar a resposta no formato da seção
+    
     return {
         "secao": "Entenda o Contexto",
         "links": links_reais
@@ -110,7 +110,7 @@ TEXTO:
 
     except Exception as e:
         
-        print("⚠️ Erro no modo JSON nativo:", e)
+        print(" Erro no modo JSON nativo:", e)
 
         
         resposta = model.generate_content(prompt)
@@ -123,7 +123,7 @@ TEXTO:
         try:
             return json.loads(conteudo_limpo)
         except Exception:
-            print("⚠️ Resposta não JSON:", conteudo)
+            print(" Resposta não JSON:", conteudo)
             return {
                 "secao": "Entenda o Contexto",
                 "links": [
