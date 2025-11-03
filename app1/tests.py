@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import pytest, time
+from unittest.mock import patch
 
 class bulletsPage:
     def __init__(self, driver):
@@ -297,3 +298,82 @@ class Test_topico_politica:
             assert "Nenhum Artigo de Política Encontrado" in msg
 
 
+class conteudo_contexto_Page:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+
+    def abrir(self, id_artigo):
+        self.driver.get(f"http://localhost:8000/artigo/{id_artigo}/contexto/")
+
+    def obter_titulo(self):
+        return self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "h1"))).text
+
+    def obter_secao(self):
+        return self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "h2"))).text
+
+    def obter_links(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, "ul li a")
+
+    def obter_mensagem_vazia(self):
+        return "Nenhum contexto adicional encontrado" in self.driver.page_source
+
+
+class Test_conteudo_de_contexto:
+    @pytest.fixture(scope="class", autouse=True)
+    def setup_class(self):
+        opts = Options()
+        opts.add_argument("--headless")
+        opts.add_argument("--no-sandbox")
+        opts.add_argument("--disable-dev-shm-usage")
+        self.driver = webdriver.Chrome(options=opts)
+        yield
+        self.driver.quit()
+
+    @patch("app1.views.gerar_contexto")
+    def test_exibe_links_de_contexto(self, mock_gerar_contexto):
+        """
+        Testa se a página exibe corretamente a seção 'Entenda o Contexto'
+        com os links retornados pela função gerar_contexto().
+        """
+        mock_gerar_contexto.return_value = {
+            "secao": "Entenda o Contexto",
+            "links": [
+                {
+                    "titulo": "História do tema",
+                    "url": "https://pt.wikipedia.org/wiki/Exemplo",
+                    "descricao": "Explica o contexto histórico do artigo."
+                },
+                {
+                    "titulo": "Análise econômica",
+                    "url": "https://exemplo.com/economia",
+                    "descricao": "Aborda os impactos econômicos mencionados."
+                }
+            ]
+        }
+
+        # artigo id 1 — deve existir no banco ou você pode criar via fixture ou migration fake
+        page = conteudo_contexto_Page(self.driver)
+        page.abrir(1)
+
+        titulo = page.obter_titulo()
+        assert titulo != ""
+
+        secao = page.obter_secao()
+        assert "Entenda o Contexto" in secao
+
+        links = page.obter_links()
+        assert len(links) >= 1
+        assert any("wikipedia" in l.get_attribute("href") for l in links)
+
+    @patch("app1.views.gerar_contexto")
+    def test_sem_links_de_contexto(self, mock_gerar_contexto):
+        """
+        Testa se a página exibe a mensagem adequada quando não há links.
+        """
+        mock_gerar_contexto.return_value = {"secao": "", "links": []}
+
+        page = conteudo_contexto_Page(self.driver)
+        page.abrir(1)
+
+        assert page.obter_mensagem_vazia()
