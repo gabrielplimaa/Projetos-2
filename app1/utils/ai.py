@@ -60,6 +60,7 @@ def gerar_gpt(texto: str):
         "secao": "Entenda o Contexto",
         "links": links_reais
     }
+#--------------------------------------------------------------
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 def gerar_contexto(texto: str) -> dict:
