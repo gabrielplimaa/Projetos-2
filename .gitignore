@@ -3,4 +3,3 @@ desktop.ini
 *.DS_Store
 *.sqlite3
 .env
-.venv
