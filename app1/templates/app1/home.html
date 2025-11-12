@@ -1,43 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Jornal do Commercio</title>
-    <link rel="stylesheet" href="{% static 'app1/css/style.css' %}">
-</head>
-<body>
-
-    <header class="main-header">
-        <div class="container">
-            <h1 class="logo-text">JC</h1>
-            
-            <nav class="main-nav">
-                <a href="{% url 'topico_pernambuco' %}">Pernambuco</a>
-                <a href="{% url 'topico_politica' %}">Política</a>
-                <a href="{% url 'topico_esportes' %}">Esportes</a>
-                <a href="{% url 'topico_cultura' %}">Cultura</a>
-            </nav>
-
-            <div class="header-login">
-                <a href="{% url 'login' %}" class="login-btn">LOGIN</a>
-            </div>
-        </div>
-    </header>
-
-    <nav class="secondary-nav">
-        <div class="container">
-            <ul>
-                <li><a href="#">AO VIVO</a></li>
-                <li><a href="#">Rádio Jornal (RECIFE)</a></li>
-                <li><a href="#">Rádio Jornal (INTERIOR)</a></li>
-                <li><a href="#">TV Jornal (RECIFE)</a></li>
-                <li><a href="#">TV Jornal (INTERIOR)</a></li>
-            </ul>
-        </div>
-    </nav>
-
-
+{% extends 'app1/base.html' %}
+{% block title %}Jornal do Commercio - Home{% endblock %}
+{% block content %}
     <main class="container">
         
         {% if manchete_principal %}
@@ -89,4 +52,4 @@
     </footer>
 
 </body>
-</html>
+{% endblock content %}

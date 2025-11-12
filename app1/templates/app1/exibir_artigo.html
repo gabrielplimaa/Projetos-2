@@ -1,6 +1,6 @@
+{% extends "app1/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,18 +44,7 @@
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="container">
-            <h1 class="logo-text">JC</h1>
-            <nav class="main-nav">
-                <a href="{% url 'home' %}">home</a>
-                <a href="{% url 'topico_pernambuco' %}">Pernambuco</a>
-                <a href="{% url 'topico_politica' %}">Política</a>
-                <a href="{% url 'topico_esportes' %}">Esportes</a>
-                <a href="{% url 'topico_cultura' %}">Cultura</a>
-            </nav>
-        </div>
-    </header>
+
 
     <!-- Banner de engajamento -->
     {% if mensagem %}
@@ -101,11 +90,6 @@
 
     </main>
 
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; {% now "Y" %} JCPM. Reconstruído para fins acadêmicos.</p>
-        </div>
-    </footer>
 
     <script>
         // Mostra o banner com animação
@@ -125,4 +109,4 @@
     </script>
 
 </body>
-</html>
+{% endblock content %}
