@@ -4,24 +4,12 @@
 {% block title %}Login ou Cadastro - JC Portal{% endblock %}
 
 {% block content %}
-<style>
-    .login-background-image{
-        background-color: #fffbe6;     
-        border: 2px solidrgb(255, 255, 255);    
-        border-radius: 8px;            
-        padding: 20px;                 
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
-        transition: transform 0.2s ease, box-shadow 0.2s ease; 
-    }
-</style>
-<div class="login-background-image">
-<div class="home-container">
+<div class="login-page-container">
     
-    <div class="login-layout-container" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div class="login-choice-container">
         
         <div class="login-col-left">
             <h1 class="login-main-title">Fazer Login</h1>
-            <p class="login-subtitle">Bem-vindo(a) ao JC!</p>
             
             <a href="{% url 'cadastro' %}" class="login-btn-primary">Crie uma Conta</a>
             
@@ -30,41 +18,42 @@
             </div>
             
             <a href="{% url 'login_existente' %}" class="login-btn-secondary">Faça login em uma conta existente</a>
+
+            <p class="login-legal-text">
+                Ao fazer login, você concorda com as
+                Condições de uso e o Aviso de Privacidade.
+            </p>
+        </div>
         
         <div class="login-col-right">
             <h2 class="login-benefits-title">É muito melhor quando você faz login</h2>
-            <p class="login-benefits-subtitle">Com uma conta, você pode:</p>
             
             <ul class="benefit-list">
                 <li>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    Salvar artigos para ler depois
+                    Conteúdos Personalizados
                 </li>
                 <li>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    Comentar nas notícias
+                    Favoritos e Leitura rápida
                 </li>
                 <li>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    Receber newsletters personalizadas
+                    Notificações Inteligentes
                 </li>
                 <li>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
-                    Continuar lendo de onde parou
+                    Bandeiras e Conquistas
                 </li>
             </ul>
         </div>
         
-    </div>
-    
-</div>
-</div>
-{% endblock %}
+    </div> </div> {% endblock %}

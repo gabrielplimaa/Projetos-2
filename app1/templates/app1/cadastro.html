@@ -3,39 +3,34 @@
 
 {% block content %}
 
-<div class="centered-container">
-    <div class="card-register">
+<div class="register-form-box"> <a href="{% url 'login' %}" class="back-btn">← Voltar</a>
 
-        <a href="{% url 'home' %}" class="back-btn">Voltar para a Página Inicial</a>
+    <h2>CADASTRO</h2>
 
-        <h2>CADASTRO</h2>
+    {% if errors %}
+    <ul class="errorlist">
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
-        {% if errors %}
-        <ul class="errorlist">
-            {% for error in errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-
-        <form method="post" action="{% url 'cadastro' %}">
-            {% csrf_token %}
-            <p>
-                <label for="id_username">Nome de usuário:</label><br>
-                <input type="text" name="username" id="id_username" required>
-            </p>
-            <p>
-                <label for="id_password1">Senha:</label><br>
-                <input type="password" name="password1" id="id_password1" required>
-            </p>
-            <p>
-                <label for="id_password2">Confirme sua senha:</label><br>
-                <input type="password" name="password2" id="id_password2" required>
-            </p>
-            <button type="submit">Cadastrar</button>
-            <input type="hidden" name="next" value="{% url 'home' %}" />
-        </form>
-    </div>
+    <form method="post" action="{% url 'cadastro' %}">
+        {% csrf_token %}
+        
+        <label for="id_username">Nome de usuário:</label>
+        <input type="text" name="username" id="id_username" required>
+        
+        <label for="id_password1">Senha:</label>
+        <input type="password" name="password1" id="id_password1" required>
+        
+        <label for="id_password2">Confirme sua senha:</label>
+        <input type="password" name="password2" id="id_password2" required>
+        
+        <button type="submit" class="btn-form-submit">Cadastrar</button>
+        
+        <input type="hidden" name="next" value="{% url 'home' %}" />
+    </form>
 </div>
 
 {% endblock content %}

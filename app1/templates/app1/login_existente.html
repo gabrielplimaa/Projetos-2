@@ -3,9 +3,9 @@
 
 {% block content %}
 
-<div class="login-form-container">
+<div class="login-form-box">
 
-    <a href="{% url 'home' %}" class="back-btn">Voltar para a Página Inicial</a>
+    <a href="{% url 'login' %}" class="back-btn">← Voltar</a>
 
     <h1>Entrar na Conta</h1>
 
@@ -15,8 +15,7 @@
     </div>
     {% endif %}
 
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
+    <form method="post" action="{% url 'login_existente' %}"> {% csrf_token %}
 
         <label for="id_login">Nome do usuário:</label>
         <input 
@@ -47,7 +46,7 @@
           required
         />
 
-        <button type="submit">Entrar</button>
+        <button type="submit" class="btn-form-submit">Entrar</button>
 
         <input type="hidden" name="next" value="{% url 'home' %}" />
     </form>

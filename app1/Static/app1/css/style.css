@@ -400,3 +400,210 @@ a:hover {
     color: #333;
     margin-bottom: 20px;
 }
+
+.login-page-container {
+    padding: 60px 20px; /* Espaçamento superior/inferior */
+}
+
+.login-choice-container {
+    display: flex;
+    max-width: 900px; /* Largura máxima do box */
+    margin: 0 auto; /* Centraliza na página */
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Garante que o border-radius funcione */
+}
+
+/* Coluna da Esquerda (Ações) */
+.login-col-left {
+    flex: 1.2; /* Um pouco maior que a da direita */
+    padding: 40px;
+    border-right: 1px solid #f0f0f0; /* Linha sutil separando */
+}
+
+.login-main-title {
+    font-size: 2.2rem; /* 36px */
+    font-weight: 700;
+    color: #111;
+    margin-top: 0;
+    margin-bottom: 30px;
+    /* A barra vertical da imagem */
+    border-left: 4px solid #111;
+    padding-left: 15px;
+}
+
+/* Botões de Login (Primário e Secundário) */
+.login-btn-primary,
+.login-btn-secondary {
+    display: block; /* Ocupa a largura toda */
+    text-decoration: none;
+    background-color: #111; /* Fundo preto */
+    color: #ffffff; /* Texto branco */
+    padding: 16px 20px;
+    margin-bottom: 15px;
+    border-radius: 30px; /* Botões arredondados */
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    border: 2px solid #111; /* Borda preta */
+    transition: all 0.2s ease;
+}
+
+.login-btn-primary:hover,
+.login-btn-secondary:hover {
+    transform: scale(1.02); /* Leve zoom */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.login-separator {
+    text-align: center;
+    color: #777;
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+.login-legal-text {
+    font-size: 0.8rem;
+    color: #888;
+    text-align: left; /* Alinhado com os botões */
+    margin-top: 25px;
+    line-height: 1.5;
+}
+
+/* Coluna da Direita (Benefícios) */
+.login-col-right {
+    flex: 1; /* Tamanho */
+    padding: 40px;
+    background-color: #fdfdfd; /* Fundo levemente diferente */
+}
+
+.login-benefits-title {
+    font-size: 1.4rem; /* 22px */
+    font-weight: 600;
+    color: #111;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.benefit-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.benefit-list li {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    color: #333;
+    margin-bottom: 18px;
+}
+
+/* Estilo do ícone SVG de check */
+.benefit-list svg {
+    stroke: #008000; /* Cor verde para o check */
+    margin-right: 12px;
+    flex-shrink: 0; /* Impede o ícone de encolher */
+}
+
+.login-form-box,
+.register-form-box {
+    max-width: 450px;
+    margin: 60px auto; /* Centraliza e dá espaço */
+    padding: 40px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.login-form-box h1,
+.register-form-box h2 {
+    text-align: center;
+    color: #111;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* Estilos do formulário */
+.login-form-box form label,
+.register-form-box form label {
+    display: block;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.login-form-box form input[type="text"],
+.login-form-box form input[type="email"],
+.login-form-box form input[type="password"],
+.register-form-box form input[type="text"],
+.register-form-box form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Garante que o padding não afete a largura */
+    font-size: 1rem;
+}
+
+.login-form-box form input:focus,
+.register-form-box form input:focus {
+    border-color: #111;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Botão de submit do formulário */
+.btn-form-submit {
+    /* Reutiliza o estilo do botão de login */
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    background-color: #111;
+    color: #ffffff;
+    padding: 16px 20px;
+    margin-top: 10px;
+    border-radius: 30px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none; /* Botões de form não precisam de borda por padrão */
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-form-submit:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Botão de voltar */
+.back-btn {
+    display: inline-block;
+    margin-bottom: 25px;
+    color: #555;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.back-btn:hover {
+    color: #111;
+    text-decoration: underline;
+}
+
+/* Mensagens de erro */
+.error-messages,
+.errorlist {
+    background-color: #ffebeB;
+    border: 1px solid #d90429;
+    color: #d90429;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    list-style-position: inside;
+}
