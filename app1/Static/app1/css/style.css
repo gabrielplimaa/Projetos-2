@@ -61,7 +61,6 @@ a:hover {
 
 /* Estilo para o botão de LOGIN no header */
 .header-login .login-btn {
-    border: 1px solid #aaa;
     padding: 8px 16px;
     text-decoration: none;
     color: #555;
@@ -75,11 +74,12 @@ a:hover {
 .secondary-nav {
     background-color: #222; /* Fundo escuro */
     padding: 5px 0;
-    margin-bottom: 30px; 
+    margin-bottom: 30px;
 }
 
 .secondary-nav ul {
     display: flex; /* Coloca os itens lado a lado */
+    justify-content: center;
     list-style: none; /* Remove as bolinhas */
     margin: 0;
     padding: 0;
