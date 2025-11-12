@@ -72,7 +72,7 @@ a:hover {
     background-color: #f4f4f4;
 }
 .secondary-nav {
-    background-color: #222; /* Fundo escuro */
+    background-color: #f10000; /* Fundo escuro */
     padding: 5px 0;
     margin-bottom: 30px;
 }
