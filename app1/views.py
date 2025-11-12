@@ -10,6 +10,7 @@ import io #manipulação de arquivos em memoria ram
 # Create your views here.
 from django.utils import timezone
 from app1.utils.ai import gerar_contexto
+from django.contrib.auth import logout
 
 def sugerir_leitura(request, artigo_id):
     artigo_atual_id =artigo_id
@@ -165,3 +166,7 @@ def login_existente(request):
         'errors': errors,
     }
     return render(request, 'app1/login_existente.html', context)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home'))
