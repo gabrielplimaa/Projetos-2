@@ -71,7 +71,7 @@ def gerar_contexto(texto: str) -> dict:
 
     prompt = f"""
 Você é um assistente de curadoria de conteúdo jornalístico.  
-Analise o texto abaixo e gere uma seção chamada **"Entenda o Contexto"**, que traga até **3 links de materiais complementares** que ajudem o leitor a compreender melhor o tema central do texto.
+Analise o texto abaixo e gere uma seção chamada **"Entenda o Contexto"**, que traga até **3 links de materiais complementares**(esses  conteudos devem ser derivados de fontes publicas de sites como a wikipedia, mas pode ser de outros sites) que ajudem o leitor a compreender melhor o tema central do texto.
 
 Os materiais devem:
 - Explicar conceitos técnicos, históricos, políticos ou econômicos citados no texto.
