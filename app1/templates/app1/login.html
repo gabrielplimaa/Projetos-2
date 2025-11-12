@@ -1,0 +1,60 @@
+{% extends 'app1/base.html' %}
+{% load static %}
+
+{% block title %}Login ou Cadastro - JC Portal{% endblock %}
+
+{% block content %}
+
+<div class="home-container">
+    
+    <div class="login-layout-container" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        
+        <div class="login-col-left">
+            <h1 class="login-main-title">Fazer Login</h1>
+            <p class="login-subtitle">Bem-vindo(a) ao JC!</p>
+            
+            <a href="{% url 'cadastro' %}" class="login-btn-primary">Crie uma Conta</a>
+            
+            <div class="login-separator">
+                <span>ou</span>
+            </div>
+            
+            <a href="{% url 'login_existente' %}" class="login-btn-secondary">Faça login em uma conta existente</a>
+        
+        <div class="login-col-right">
+            <h2 class="login-benefits-title">É muito melhor quando você faz login</h2>
+            <p class="login-benefits-subtitle">Com uma conta, você pode:</p>
+            
+            <ul class="benefit-list">
+                <li>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Salvar artigos para ler depois
+                </li>
+                <li>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Comentar nas notícias
+                </li>
+                <li>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Receber newsletters personalizadas
+                </li>
+                <li>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Continuar lendo de onde parou
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+    
+</div>
+
+{% endblock %}

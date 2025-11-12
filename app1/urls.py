@@ -14,4 +14,7 @@ urlpatterns = [
     path('cultura/', views.topico_cultura, name='topico_cultura'),
     path('artigo/<int:artigo_id>/',views.exibir_artigo, name='exibir_artigo'),
     path('artigo/<int:id_artigo>/contexto/', views.conteudo_de_contexto, name='conteudo_de_contexto'),
+    path('login/', views.login_view, name='login'),
+    path('login_existente/', views.login_existente, name='login_existente'),
+    path('cadastro/', views.cadastro, name='cadastro'),
 ]

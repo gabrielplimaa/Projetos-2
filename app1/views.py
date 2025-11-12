@@ -1,7 +1,10 @@
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from .models import Artigos, Progresso_diario
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from gtts import gTTS #tem que baixar essa biblioteca do google
 import io #manipulação de arquivos em memoria ram
 # Create your views here.
@@ -97,3 +100,68 @@ def conteudo_de_contexto(request,id_artigo):
     contexto_gerado=gerar_contexto(artigo.conteudo)
     context={'artigo':artigo,'contexto_gerado':contexto_gerado}
     return render(request,'app1/conteudo_de_contexto.html',context)
+
+def cadastro(request):
+    errors = []
+    username = ""
+    password1 = ""
+    password2 = ""
+    email = ""
+
+    if request.method == "POST":
+        username = request.POST.get("username", "").strip()
+        email = request.POST.get("email", "").strip()
+        password1 = request.POST.get("password1", "").strip()
+        password2 = request.POST.get("password2", "").strip()
+
+        if not username:
+            errors.append("O nome de usuário é obrigatório.")
+        if not password1 or not password2:
+            errors.append("A senha e a confirmação são obrigatórias.")
+        elif password1 != password2:
+            errors.append("As senhas não coincidem.")
+        elif User.objects.filter(username=username).exists():
+            errors.append("Esse nome de usuário já está em uso.")
+
+        if not errors:
+            user = User.objects.create_user(username=username, password=password1)
+            authenticated_user = authenticate(username=username, password=password1)
+
+            if authenticated_user:
+                login(request, authenticated_user)
+                return redirect("home")
+
+    context = {"errors": errors, "username": username}
+    return render(request, "app1/cadastro.html", context)
+
+def login_view(request):
+    return render(request, 'app1/login.html', {})
+
+def login_existente(request):
+    errors = None
+
+    if request.method != 'POST':
+        usuario = ""
+        email= ""
+        senha = ""
+    else:
+        usuario = request.POST.get("login")
+        email = request.POST.get("email")
+        senha = request.POST.get("senha")
+
+        if usuario and senha:
+            user = authenticate(username=usuario, password=senha, email=email)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse('home'))
+            else:
+                errors = "Usuário ou senha inválidos."
+        else:
+            errors = "Preencha todos os campos."
+
+    context = {
+        'usuario': usuario,
+        'senha': senha,
+        'errors': errors,
+    }
+    return render(request, 'app1/login_existente.html', context)

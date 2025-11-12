@@ -1,0 +1,56 @@
+{% extends 'app1/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="login-form-container">
+
+    <a href="{% url 'home' %}" class="back-btn">Voltar para a Página Inicial</a>
+
+    <h1>Entrar na Conta</h1>
+
+    {% if errors %}
+    <div class="error-messages">
+        {{ errors }}
+    </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <label for="id_login">Nome do usuário:</label>
+        <input 
+          type="text" 
+          id="id_login" 
+          name="login" 
+          value="{{ usuario|default:'' }}" 
+          maxlength="50" 
+          required
+        />
+
+        <label for="id_email">Email:</label>
+        <input 
+          type="email" 
+          id="id_email" 
+          name="email" 
+          value="{{ email|default:'' }}" 
+          maxlength="100" 
+          required
+        />
+
+        <label for="id_senha">Senha:</label>
+        <input 
+          type="password" 
+          id="id_senha" 
+          name="senha" 
+          maxlength="50" 
+          required
+        />
+
+        <button type="submit">Entrar</button>
+
+        <input type="hidden" name="next" value="{% url 'home' %}" />
+    </form>
+</div>
+
+{% endblock content %}
