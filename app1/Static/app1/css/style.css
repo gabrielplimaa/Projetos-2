@@ -58,23 +58,59 @@ a:hover {
     color: #d90429;
 }
 
-/* LAYOUT DE GRID PRINCIPAL */
+/* --- ADICIONADO --- */
+/* Estilo para o botão de LOGIN no header */
+.header-login .login-btn {
+    border: 1px solid #aaa;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+.header-login .login-btn:hover {
+    background-color: #f4f4f4;
+}
+.secondary-nav {
+    background-color: #222; /* Fundo escuro */
+    padding: 5px 0;
+    margin-bottom: 30px; 
+}
+
+.secondary-nav ul {
+    display: flex; /* Coloca os itens lado a lado */
+    list-style: none; /* Remove as bolinhas */
+    margin: 0;
+    padding: 0;
+}
+
+.secondary-nav li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: block;
+}
+
+.secondary-nav li a:hover {
+    background-color: #444; /* Efeito ao passar o mouse */
+}
+
 .grid-container {
     display: grid;
-    /* Conteúdo principal (2.5fr) e barra lateral (1fr) */
     grid-template-columns: 2.5fr 1fr;
     gap: 30px;
     margin-bottom: 40px;
 }
 
-/* TÍTULOS DE SEÇÃO (IMPLEMENTAÇÃO DO ESTILO COM LINHA VERMELHA) */
 .section-title {
     font-size: 1.6rem;
     font-weight: 700;
     color: #111;
     margin: 0 0 15px 0;
     padding-bottom: 10px;
-    /* Linha cinza clara que está por baixo da vermelha */
     border-bottom: 1px solid #e0e0e0;
     position: relative;
 }
@@ -90,9 +126,6 @@ a:hover {
     background-color: #d90429; /* Vermelho */
 }
 
-/* ------------------------------------------------------------------ */
-/* CARD DE NOTÍCIA GERAL */
-/* ------------------------------------------------------------------ */
 .card {
     background-color: #ffffff;
     border: 1px solid #f0f0f0;
@@ -150,13 +183,13 @@ a:hover {
     font-weight: normal;
 }
 
-/* ------------------------------------------------------------------ */
-/* ESTILO DA MANCHETE PRINCIPAL (card-manchete) */
-/* ------------------------------------------------------------------ */
 .card-manchete {
-    padding: 0; /* Remove padding do card principal para a imagem ocupar a borda */
-    margin-bottom: 30px;
+    padding: 0; /* Original */
+    margin-bottom: 30px; /* Original */
+    text-align: center; /*Adicionado para centralizar a manchete --- */
+    margin-top: 40px;  /*Adicionado espaço da barra preta --- */
 }
+
 .card-manchete .card-content {
     padding: 20px;
 }
@@ -169,62 +202,23 @@ a:hover {
     color: #111;
 }
 
-/* Na manchete, o resumo e a categoria são mais discretos ou ocultos */
 .card-manchete .card-summary {
     display: none; /* Oculta o resumo da manchete na home, se desejar */
 }
 
-/* ------------------------------------------------------------------ */
-/* GRID MAIS RECENTES (recent-grid) */
-/* ------------------------------------------------------------------ */
 .recent-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
-    gap: 20px; /* Espaçamento mais apertado */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px; 
     margin-top: 20px;
 }
 
-.recent-grid .card {
-    /* Faz com que o card seja uma linha horizontal de imagem + conteúdo */
-    display: flex;
-    flex-direction: row; 
-    border: none; /* Remove bordas internas */
-    background: none; /* Remove fundo branco extra */
-    padding: 0;
-    margin-bottom: 0;
+@media (max-width: 768px) {
+    .recent-grid {
+        grid-template-columns: 1fr; /* Uma coluna só no celular */
+    }
 }
 
-.recent-grid .card img {
-    width: 100px; /* Largura pequena da imagem */
-    height: 100px;
-    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
-    margin-right: 15px;
-}
-
-.recent-grid .card-content {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.recent-grid .card-category {
-    margin-bottom: 2px;
-}
-
-.recent-grid .card-title {
-    margin-bottom: 5px;
-}
-
-.recent-grid .card-title a {
-    font-size: 1rem; /* Títulos menores */
-    line-height: 1.2;
-}
-
-
-/* ------------------------------------------------------------------ */
-/* BARRA LATERAL (SIDEBAR) */
-/* ------------------------------------------------------------------ */
 .sidebar {
     padding-left: 0;
 }
@@ -276,6 +270,8 @@ a:hover {
     border-top: 1px solid #e0e0e0;
     font-size: 0.85rem;
 }
+
+
 /* Estilos específicos para o conteúdo do artigo */
 .article-content {
     background-color: #fff; /* Fundo branco para a área do artigo */
@@ -386,7 +382,7 @@ a:hover {
     padding: 40px;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
-    margin-bottom: 0; /* Removido, pois a sugestão fica abaixo */
+    margin-bottom: 0;
 }
 
 .artigo-principal h1 {

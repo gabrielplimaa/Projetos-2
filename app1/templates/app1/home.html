@@ -11,92 +11,76 @@
     <header class="main-header">
         <div class="container">
             <h1 class="logo-text">JC</h1>
+            
             <nav class="main-nav">
                 <a href="{% url 'topico_pernambuco' %}">Pernambuco</a>
                 <a href="{% url 'topico_politica' %}">Política</a>
                 <a href="{% url 'topico_esportes' %}">Esportes</a>
                 <a href="{% url 'topico_cultura' %}">Cultura</a>
             </nav>
+
+            <div class="header-login">
+                <a href="{% url 'login' %}" class="login-btn">LOGIN</a>
+            </div>
         </div>
     </header>
 
-    <main class="container grid-container">
+    <nav class="secondary-nav">
+        <div class="container">
+            <ul>
+                <li><a href="#">AO VIVO</a></li>
+                <li><a href="#">Rádio Jornal (RECIFE)</a></li>
+                <li><a href="#">Rádio Jornal (INTERIOR)</a></li>
+                <li><a href="#">TV Jornal (RECIFE)</a></li>
+                <li><a href="#">TV Jornal (INTERIOR)</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <main class="container">
         
-        <div class="main-content">
-            {% if manchete_principal %}
-            <article class="card card-manchete">
-                {% if manchete_principal.imagem %}
-                    <img src="{{ manchete_principal.imagem.url }}" alt="{{ manchete_principal.titulo }}">
-                {% endif %}
-                <div class="card-content">
-                    <span class="card-category">{{ manchete_principal.categoria }}</span>
-                    <h2 class="card-title">
-                        <a href="{% url 'exibir_artigo' manchete_principal.id %}">
-                            {{ manchete_principal.titulo }}
-                        </a>
-                    </h2>
-                    <p class="card-summary">{{ manchete_principal.resumo }}</p>
-                </div>
-            </article>
+        {% if manchete_principal %}
+        <article class="card card-manchete">
+            
+            {% if manchete_principal.imagem %}
+                <img src="{{ manchete_principal.imagem.url }}" alt="{{ manchete_principal.titulo }}">
             {% endif %}
 
-            <h3 class="section-title">Mais Recentes</h3>
-            <div class="recent-grid">
-                {% for artigo in mais_recentes %}
-                <article class="card">
-                    {% if artigo.imagem %}
-                        <img src="{{ artigo.imagem.url }}" alt="{{ artigo.titulo }}">
-                    {% endif %}
-                    <div class="card-content">
-                        <span class="card-category">{{ artigo.categoria }}</span>
-                        <h4 class="card-title">
-                            <a href="{% url 'exibir_artigo' artigo.id %}">
-                                {{ artigo.titulo }}
-                            </a>
-                        </h4>
-                    </div>
-                </article>
-                {% endfor %}
+            <div class="card-content">
+                <span class="card-category">{{ manchete_principal.categoria|upper }}</span>
+                <h2 class="card-title">
+                    <a href="{% url 'exibir_artigo' manchete_principal.id %}">
+                        {{ manchete_principal.titulo }}
+                    </a>
+                </h2>
+                <p class="card-summary">{{ manchete_principal.resumo }}</p> 
             </div>
+        </article>
+        {% endif %}
+
+
+        <h3 class="section-title">Mais Recentes</h3>
+        
+        <div class="recent-grid">
+            {% for artigo in mais_recentes %}
+            <article class="card">
+                {% if artigo.imagem %}
+                    <img src="{{ artigo.imagem.url }}" alt="{{ artigo.titulo }}">
+                {% endif %}
+                <div class="card-content">
+                    <span class="card-category">{{ artigo.categoria|upper }}</span>
+                    <h4 class="card-title">
+                        <a href="{% url 'exibir_artigo' artigo.id %}">
+                            {{ artigo.titulo }}
+                        </a>
+                    </h4>
+                </div>
+            </article>
+            {% endfor %}
         </div>
 
-        <aside class="sidebar">
-            <h3 class="section-title">Política</h3>
-            <div class="post-list">
-            {% for artigo in artigos_politica %}
-                <article class="card card-sidebar">
-                    <div class="card-content">
-                        <h5 class="card-title">
-                            <a href="{% url 'exibir_artigo' artigo.id %}">
-                                {{ artigo.titulo }}
-                            </a>
-                        </h5>
-                    </div>
-                </article>
-            {% empty %}
-                <p>Nenhuma notícia de política encontrada.</p>
-            {% endfor %}
-            </div>
-
-            <h3 class="section-title">Opinião</h3>
-            <div class="post-list">
-            {% for artigo in artigos_opiniao %}
-                <article class="card card-sidebar">
-                    <div class="card-content">
-                        <h5 class="card-title">
-                            <a href="{% url 'exibir_artigo' artigo.id %}">
-                                {{ artigo.titulo }}
-                            </a>
-                        </h5>
-                    </div>
-                </article>
-            {% empty %}
-                <p>Nenhum artigo de opinião encontrado.</p>
-            {% endfor %}
-            </div>
-        </aside>
-
-    </main>
+        </main>
 
     <footer class="main-footer">
         <div class="container">
