@@ -8,14 +8,12 @@
     <title>{% block title %}Jornal do Commercio{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'app1/css/style.css' %}">
 
-    
-    
-    </head>
+</head>
 <body>
 
     <header class="main-header">
         <div class="container">
-            <h1 class="logo-text">JC</h1>
+            <img src="{% static 'app1/assets/logo.png' %}" alt="Logo do Jornal do Commercio">
             
             <nav class="main-nav">
                 <a href="{% url 'home' %}">Home</a>
