@@ -13,10 +13,10 @@
 
     <header class="main-header">
         <div class="container">
-            <img src="{% static 'app1/assets/logo.png' %}" alt="Logo do Jornal do Commercio" class="header-logo">
-            
+            <a href="{% url 'home' %}" >
+            <img src="{% static 'app1/assets/logo.png' %}" alt="Logo do Jornal do Commercio" class="header-logo" >
+            </a>
             <nav class="main-nav">
-                <a href="{% url 'home' %}">Home</a>
                 <a href="{% url 'topico_pernambuco' %}">Pernambuco</a>
                 <a href="{% url 'topico_politica' %}">Política</a>
                 <a href="{% url 'topico_esportes' %}">Esportes</a>

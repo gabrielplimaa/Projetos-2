@@ -5,7 +5,7 @@
 
 <div class="register-form-box"> <a href="{% url 'login' %}" class="back-btn">← Voltar</a>
 
-    <h2>CADASTRO</h2>
+    <h2>Crie sua conta</h2>
 
     {% if errors %}
     <ul class="errorlist">
@@ -21,13 +21,16 @@
         <label for="id_username">Nome de usuário:</label>
         <input type="text" name="username" id="id_username" required>
         
+        <label for="id_email">Email:</label>
+        <input type="text" name="email" id="id_email" required>
+
         <label for="id_password1">Senha:</label>
         <input type="password" name="password1" id="id_password1" required>
         
         <label for="id_password2">Confirme sua senha:</label>
         <input type="password" name="password2" id="id_password2" required>
         
-        <button type="submit" class="btn-form-submit">Cadastrar</button>
+        <button type="submit" class="btn-form-submit">Criar</button>
         
         <input type="hidden" name="next" value="{% url 'home' %}" />
     </form>
