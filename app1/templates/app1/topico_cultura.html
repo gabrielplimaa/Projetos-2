@@ -1,66 +1,40 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tópico: Cultura</title>
-    <link rel="stylesheet" href="{% static 'app1/css/style.css' %}">
-</head>
-<body>
-    
-    <header class="main-header">
-        <div class="container">
-            <h1 class="logo-text">Cultura</h1>
-            <nav class="main-nav">
-                <a href="{% url 'home' %}">Home</a>
-                <a href="{% url 'topico_politica' %}">Política</a>
-                <a href="{% url 'topico_pernambuco' %}">Pernambuco</a>
-                <a href="{% url 'topico_esportes' %}">Esportes</a>
-            </nav>
-        </div>
-    </header>
+{% extends "app1/base.html" %}
 
-    <div class="container">
-        <h2 class="section-title">Arte, Tradição e o Panorama Cultural</h2>
+{% block title %}Cultura | Jornal do Commercio{% endblock %}
 
-        {% if artigos_cultura %}
-            {% for artigo in artigos_cultura %}
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-category">CULTURA</span>
-                        
-                        <h3 class="card-title">
-                            <a href="{% url 'exibir_artigo' artigo.id %}">
-                                {{ artigo.titulo }}
-                            </a>
-                        </h3>
-                        
-                        <p class="card-summary">
-                            {{ artigo.conteudo|truncatechars:250 }}
-                        </p>
+{% block content %}
+<div class="container">
+    <h2 class="section-title">Arte, Tradição e o Panorama Cultural</h2>
 
-                        <span class="card-date">
-                            Publicado em: {{ artigo.data_publicacao|date:"d/m/Y H:i" }}
-                        </span>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
+    {% if artigos_cultura %}
+        {% for artigo in artigos_cultura %}
             <div class="card">
                 <div class="card-content">
-                    <h2>Nenhum Artigo de Cultura Encontrado</h2>
-                    <p>Não há conteúdo publicado nesta categoria no momento.</p>
+                    <span class="card-category">CULTURA</span>
+                    
+                    <h3 class="card-title">
+                        <a href="{% url 'exibir_artigo' artigo.id %}">
+                            {{ artigo.titulo }}
+                        </a>
+                    </h3>
+                    
+                    <p class="card-summary">
+                        {{ artigo.conteudo|truncatechars:250 }}
+                    </p>
+
+                    <span class="card-date">
+                        Publicado em: {{ artigo.data_publicacao|date:"d/m/Y H:i" }}
+                    </span>
                 </div>
             </div>
-        {% endif %}
-    </div>
-
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 JCPM. Reconstruído para fins acadêmicos.</p>
+        {% endfor %}
+    {% else %}
+        <div class="card">
+            <div class="card-content">
+                <h2>Nenhum Artigo de Cultura Encontrado</h2>
+                <p>Não há conteúdo publicado nesta categoria no momento.</p>
+            </div>
         </div>
-    </footer>
-
-</body>
-</html>
+    {% endif %}
+</div>
+{% endblock %}
