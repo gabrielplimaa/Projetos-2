@@ -85,9 +85,9 @@ a:hover {
 }
 
 .header-logo {
-    width: clamp(120px, 18vw, 220px);
+    width: 120px;
     height: auto;
-    max-width: 100%;
+    display: block;
 }
 
 .header-login {
@@ -95,13 +95,15 @@ a:hover {
 }
 
 .header-login .login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 8px 18px;
     text-decoration: none;
     color: #555;
-    font-weight: bold;
-    border-radius: 4px;
+    font-weight: 600;
+    border-radius: 25px;
     font-size: 0.9rem;
-    border: 1px solid #555;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -152,41 +154,6 @@ a:hover {
     color: #f6c400;
 }
 
-@media (min-width: 900px) {
-    .hamburger {
-        display: none;
-    }
-
-    .main-nav {
-        position: static;
-        background: transparent;
-        padding: 0;
-        width: auto;
-        transform: none;
-        opacity: 1;
-        pointer-events: auto;
-        border-radius: 0;
-    }
-
-    .main-nav ul {
-        display: flex;
-        gap: 2.5rem;
-        align-items: center;
-    }
-
-    .main-nav li + li {
-        margin-top: 0;
-    }
-
-    .main-nav a {
-        color: #3d3d3d;
-        font-weight: bold;
-    }
-
-    .main-nav a:hover {
-        color: #d90429;
-    }
-}
 .secondary-nav {
     background-color: #f10000; /* Fundo escuro */
     padding: 5px 0;

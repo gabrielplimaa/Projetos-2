@@ -18,13 +18,15 @@
                 <span></span>
                 <span></span>
             </button>
+
             <a href="{% url 'home' %}" class="brand">
-            <img src="{% static 'app1/assets/logo.png' %}" alt="Logo do Jornal do Commercio" class="header-logo" >
+                <img src="{% static 'app1/assets/logo.png' %}" alt="Logo do Jornal do Commercio" class="header-logo" >
             </a>
 
             <div class="header-login">
                 <a href="{% url 'login' %}" class="login-btn">Login</a>
             </div>
+        </div>
   
             <nav class="main-nav" id="main-nav">
                 <ul>
@@ -32,9 +34,8 @@
                     <li><a href="{% url 'topico_politica' %}">Política</a></li>
                     <li><a href="{% url 'topico_esportes' %}">Esportes</a></li>
                     <li><a href="{% url 'topico_cultura' %}">Cultura</a></li>
-                <ul/>
+                </ul>
             </nav>
-        </div>
     </header>
 
     <nav class="secondary-nav">
