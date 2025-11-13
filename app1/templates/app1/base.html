@@ -6,26 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>{% block title %}Jornal do Commercio{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'app1/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'app1/static/css/style.css' %}">
 
 </head>
 <body>
 
     <header class="main-header">
-        <div class="container">
-            <a href="{% url 'home' %}" >
+        <div class="container header-grid">
+            <button class="hamburger" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="{% url 'home' %}" class="brand">
             <img src="{% static 'app1/assets/logo.png' %}" alt="Logo do Jornal do Commercio" class="header-logo" >
             </a>
-            <nav class="main-nav">
-                <a href="{% url 'topico_pernambuco' %}">Pernambuco</a>
-                <a href="{% url 'topico_politica' %}">Política</a>
-                <a href="{% url 'topico_esportes' %}">Esportes</a>
-                <a href="{% url 'topico_cultura' %}">Cultura</a>
-            </nav>
 
             <div class="header-login">
                 <a href="{% url 'login' %}" class="login-btn">Login</a>
             </div>
+  
+            <nav class="main-nav" id="main-nav">
+                <ul>
+                    <li><a href="{% url 'topico_pernambuco' %}">Pernambuco</a></li>
+                    <li><a href="{% url 'topico_politica' %}">Política</a></li>
+                    <li><a href="{% url 'topico_esportes' %}">Esportes</a></li>
+                    <li><a href="{% url 'topico_cultura' %}">Cultura</a></li>
+                <ul/>
+            </nav>
         </div>
     </header>
 
@@ -49,5 +57,21 @@
             <p>&copy; 2025 JCPM. Reconstruído para fins acadêmicos.</p>
         </div>
     </footer>
+
+    <!--Esse script é para abrir/fechar o menu hamburger-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const toggle = document.getElementById('menu-toggle');
+            const nav = document.getElementById('main-nav');
+
+            if (!toggle || !nav) return;
+
+            toggle.addEventListener('click', function(){
+                const isOpen = nav.classList.toggle('is-open');
+                toggle.classList.toggle('is-active', isOpen);
+                toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+        });
+    </script>
     </body>
 </html>
