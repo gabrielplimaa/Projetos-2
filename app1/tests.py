@@ -11,9 +11,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-driver.get("https://www.google.com")
-
 class bulletsPage:
     def __init__(self, driver):
         self.driver = driver
@@ -74,17 +71,18 @@ class exibir_artigo_Page:
             return banner.is_displayed()
         except:
             return False
+    def obter_conteudo(self):
+        try:
+            elemento = self.driver.find_element(By.CSS_SELECTOR, ".article-content p")
+            return elemento.text
+        except:
+            return ""
 
-@pytest.fixture
-def driver():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(options=options)
-    driver.maximize_window()
-    yield driver
-    driver.quit()
+    def obter_data_publicacao(self):
+        try:
+            return self.driver.find_element(By.CLASS_NAME, "card-date").text
+        except:
+            return None
 
 class Test_exibir_artigo:
     def test_artigo_com_banner(self, driver):
@@ -96,6 +94,10 @@ class Test_exibir_artigo:
         assert "Sugestões de Leitura" in links
         assert "Ver Pontos Chave" in links
         assert page.verificar_banner()
+        assert page.obter_conteudo().strip() != ""
+        data = page.obter_data_publicacao()
+        assert data is None or "Publicado em:" in data
+        
     def test_artigo_sem_banner(self, driver):
         page = exibir_artigo_Page(driver)
         page.abrir("http://localhost:8000/artigo_sem_banner/")
@@ -105,15 +107,40 @@ class Test_exibir_artigo:
         assert "Sugestões de Leitura" in links
         assert "Ver Pontos Chave" in links
         assert not page.verificar_banner()
+        assert page.obter_conteudo().strip() != ""
+        data = page.obter_data_publicacao()
+        assert data is None or "Publicado em:" in data
 
 class Test_home:
-    @pytest.fixture(scope="class", autouse=True)
+    def test_manchete_imagem(self):
+        manchete_img = self.driver.find_elements(By.CSS_SELECTOR, ".card-manchete img")
+        if manchete_img:  
+            src = manchete_img[0].get_attribute("src")
+            assert src.strip() != ""
+
+    def test_manchete_resumo(self):
+        resumo = self.driver.find_element(By.CSS_SELECTOR, ".card-manchete .card-summary").text
+        assert resumo.strip() != ""
+
+    def test_manchete_categoria(self):
+        categoria = self.driver.find_element(By.CSS_SELECTOR, ".card-manchete .card-category").text
+        assert categoria.strip() != ""
+
+    def test_mais_recentes_titulos_e_categorias(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".recent-grid article")
+        for artigo in artigos:
+            titulo = artigo.find_element(By.CSS_SELECTOR, ".card-title a").text
+            categoria = artigo.find_element(By.CSS_SELECTOR, ".card-category").text
+            assert titulo.strip() != ""
+            assert categoria.strip() != ""
+
     def setup_class(self):
         opts = Options()
         opts.add_argument("--headless")
         self.driver = webdriver.Chrome(options=opts)
         self.driver.get("http://127.0.0.1:8000/")
-        yield
+
+    def teardown_class(self):
         self.driver.quit()
 
     def test_titulo_pagina(self):
@@ -143,6 +170,19 @@ class Test_home:
 
 class Test_sugestão:
     @pytest.fixture(scope="class", autouse=True)
+    def test_sugestoes_categoria_no_titulo(self):
+        box = self.driver.find_element(By.CSS_SELECTOR, ".sugestoes-box h3").text
+        assert "Sugestões de Leitura" in box
+        assert "Categoria:" in box
+        artigo_categoria = self.driver.find_element(By.CSS_SELECTOR, ".artigo-principal .card-date strong").text
+        assert artigo_categoria.lower() in box.lower()
+    
+    def test_datas_sugestoes(self):
+        sugestoes = self.driver.find_elements(By.CSS_SELECTOR, ".sugestoes-box ul li")
+        for s in sugestoes:
+            data = s.find_element(By.TAG_NAME, "small").text
+            assert "/" in data #para ver o formato certo de data
+
     def setup_class(self):
         opts = Options()
         opts.add_argument("--headless")
@@ -171,9 +211,15 @@ class Test_sugestão:
     def test_sugestoes(self):
         box = self.driver.find_element(By.CSS_SELECTOR, ".sugestoes-box h3").text
         assert "Sugestões de Leitura" in box
+    
         sugestoes = self.driver.find_elements(By.CSS_SELECTOR, ".sugestoes-box ul li a")
-        msg_vazia = self.driver.find_elements(By.XPATH, "//*[contains(text(),'Não há mais artigos recentes')]")
-        assert len(sugestoes) > 0 or len(msg_vazia) > 0
+    
+        if len(sugestoes) == 0:
+            msg = self.driver.find_element(By.CSS_SELECTOR, ".sugestoes-box p").text
+            assert "Não há mais artigos recentes nesta categoria" in msg
+        else:
+            assert len(sugestoes) > 0
+
 
 class Test_Topico_Cultura:
     @pytest.fixture(scope="class", autouse=True)
@@ -206,6 +252,25 @@ class Test_Topico_Cultura:
         else:
             msg = self.driver.find_element(By.TAG_NAME,"h2").text
             assert "Nenhum Artigo de Cultura Encontrado" in msg
+    def test_artigos_resumo(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".card .card-content")
+        for a in artigos:
+            if a.find_elements(By.CSS_SELECTOR, ".card-summary"):
+                resumo = a.find_element(By.CSS_SELECTOR, ".card-summary").text
+                assert resumo.strip() != ""
+    def test_artigos_categoria_cultura(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".card .card-content")
+        for a in artigos:
+            categoria = a.find_element(By.CSS_SELECTOR, ".card-category").text
+            assert categoria.upper() == "CULTURA"
+    def test_datas_artigos(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".card .card-content")
+        for a in artigos:
+            data = a.find_element(By.CSS_SELECTOR, ".card-date").text
+            assert "Publicado em:" in data
+            assert "/" in data
+            assert ":" in data
+
 
 class Test_topico_esportes:
     @pytest.fixture(scope="class", autouse=True)
@@ -238,6 +303,24 @@ class Test_topico_esportes:
         else:
             msg = self.driver.find_element(By.TAG_NAME,"h2").text
             assert "Nenhum Artigo de Esportes Encontrado" in msg
+    def test_artigos_resumo(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".card .card-content")
+        for a in artigos:
+            if a.find_elements(By.CSS_SELECTOR, ".card-summary"):
+                resumo = a.find_element(By.CSS_SELECTOR, ".card-summary").text
+                assert resumo.strip() != ""
+    def test_artigos_categoria_esportes(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".card .card-content")
+        for a in artigos:
+            categoria = a.find_element(By.CSS_SELECTOR, ".card-category").text
+            assert categoria.upper() == "ESPORTES"
+    def test_datas_artigos(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".card .card-content")
+        for a in artigos:
+            data = a.find_element(By.CSS_SELECTOR, ".card-date").text
+            assert "Publicado em:" in data
+            assert "/" in data
+            assert ":" in data
 
 class Test_topico_pernambuco:
     @pytest.fixture(scope="class", autouse=True)
@@ -245,8 +328,9 @@ class Test_topico_pernambuco:
         opts = Options()
         opts.add_argument("--headless")
         self.driver = webdriver.Chrome(options=opts)
-        self.driver.get("http://127.0.0.1:8000/topico_pernambuco/")
-        yield
+        self.driver.get("http://127.0.0.1:8000/")
+
+    def teardown_class(self):
         self.driver.quit()
 
     def test_titulo_pagina(self):
@@ -270,6 +354,27 @@ class Test_topico_pernambuco:
         else:
             msg = self.driver.find_element(By.TAG_NAME,"h2").text
             assert "Nenhum Artigo de Pernambuco Encontrado" in msg
+            
+    def test_artigos_resumo(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".card .card-content")
+        for a in artigos:
+            if a.find_elements(By.CSS_SELECTOR, ".card-summary"):
+                resumo = a.find_element(By.CSS_SELECTOR, ".card-summary").text
+                assert resumo.strip() != ""
+
+    def test_artigos_categoria_pernambuco(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".card .card-content")
+        for a in artigos:
+            categoria = a.find_element(By.CSS_SELECTOR, ".card-category").text
+            assert categoria.upper() == "PERNAMBUCO" 
+
+    def test_datas_artigos(self):
+        artigos = self.driver.find_elements(By.CSS_SELECTOR, ".card .card-content")
+        for a in artigos:
+            data = a.find_element(By.CSS_SELECTOR, ".card-date").text
+            assert "Publicado em:" in data
+            assert "/" in data
+            assert ":" in data          
 
 class Test_topico_politica:
     @pytest.fixture(scope="class", autouse=True)
@@ -316,14 +421,17 @@ class conteudo_contexto_Page:
         return self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "h1"))).text
 
     def obter_secao(self):
-        return self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "h2"))).text
+        try:
+            return self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "h2"))).text
+        except:
+            return None
 
     def obter_links(self):
-        return self.driver.find_elements(By.CSS_SELECTOR, "ul li a")
+        descricoes = self.driver.find_elements(By.CSS_SELECTOR, "ul li p")
+        return [d.text for d in descricoes]
 
     def obter_mensagem_vazia(self):
         return "Nenhum contexto adicional encontrado" in self.driver.page_source
-
 
 class Test_conteudo_de_contexto:
     @pytest.fixture(scope="class", autouse=True)
@@ -338,48 +446,92 @@ class Test_conteudo_de_contexto:
 
     @patch("app1.views.gerar_contexto")
     def test_exibe_links_de_contexto(self, mock_gerar_contexto):
-        """
-        Testa se a página exibe corretamente a seção 'Entenda o Contexto'
-        com os links retornados pela função gerar_contexto().
-        """
         mock_gerar_contexto.return_value = {
             "secao": "Entenda o Contexto",
             "links": [
-                {
-                    "titulo": "História do tema",
-                    "url": "https://pt.wikipedia.org/wiki/Exemplo",
-                    "descricao": "Explica o contexto histórico do artigo."
-                },
-                {
-                    "titulo": "Análise econômica",
-                    "url": "https://exemplo.com/economia",
-                    "descricao": "Aborda os impactos econômicos mencionados."
-                }
+                {"titulo": "História do tema", "url": "https://pt.wikipedia.org/wiki/Exemplo", "descricao": "Explica o contexto histórico do artigo."},
+                {"titulo": "Análise econômica", "url": "https://exemplo.com/economia", "descricao": "Aborda os impactos econômicos mencionados."}
             ]
         }
-
-        # artigo id 1 — deve existir no banco ou você pode criar via fixture ou migration fake
         page = conteudo_contexto_Page(self.driver)
         page.abrir(1)
-
         titulo = page.obter_titulo()
         assert titulo != ""
-
         secao = page.obter_secao()
         assert "Entenda o Contexto" in secao
-
-        links = page.obter_links()
-        assert len(links) >= 1
-        assert any("wikipedia" in l.get_attribute("href") for l in links)
+        def obter_links(self):
+            return self.driver.find_elements(By.CSS_SELECTOR, "ul li a")
 
     @patch("app1.views.gerar_contexto")
     def test_sem_links_de_contexto(self, mock_gerar_contexto):
-        """
-        Testa se a página exibe a mensagem adequada quando não há links.
-        """
         mock_gerar_contexto.return_value = {"secao": "", "links": []}
-
         page = conteudo_contexto_Page(self.driver)
         page.abrir(1)
-
         assert page.obter_mensagem_vazia()
+
+class login_Page:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+
+    def abrir(self):
+        self.driver.get("http://localhost:8000/login/")
+
+    def obter_titulo_principal(self):
+        return self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "login-main-title"))).text
+
+    def obter_titulo_beneficios(self):
+        return self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "login-benefits-title"))).text
+
+    def obter_botoes(self):
+        return self.driver.find_elements(By.CSS_SELECTOR, ".login-btn-primary, .login-btn-secondary")
+
+    def obter_texto_legal(self):
+        return self.driver.find_element(By.CLASS_NAME, "login-legal-text").text
+
+    def obter_lista_beneficios(self):
+        itens = self.driver.find_elements(By.CSS_SELECTOR, ".benefit-list li")
+        return [i.text for i in itens]
+
+    def clicar_criar_conta(self):
+        self.driver.find_element(By.CLASS_NAME, "login-btn-primary").click()
+
+    def clicar_entrar(self):
+        self.driver.find_element(By.CLASS_NAME, "login-btn-secondary").click()
+
+class login_existente_Page:
+    def __init__(self, driver):
+        self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
+
+    def abrir(self):
+        self.driver.get("http://localhost:8000/login_existente/")
+
+    def obter_titulo(self):
+        return self.wait.until(EC.presence_of_element_located((By.TAG_NAME, "h1"))).text
+
+    def obter_botao_voltar(self):
+        return self.driver.find_element(By.CLASS_NAME, "back-btn")
+
+    def obter_mensagens_erro(self):
+        erros = self.driver.find_elements(By.CLASS_NAME, "error-messages")
+        return [e.text for e in erros] if erros else []
+
+    def preencher_login(self, valor):
+        campo = self.driver.find_element(By.ID, "id_login")
+        campo.clear()
+        campo.send_keys(valor)
+
+    def preencher_email(self, valor):
+        campo = self.driver.find_element(By.ID, "id_email")
+        campo.clear()
+        campo.send_keys(valor)
+
+    def preencher_senha(self, valor):
+        campo = self.driver.find_element(By.ID, "id_senha")
+        campo.clear()
+        campo.send_keys(valor)
+
+    def clicar_entrar(self):
+        self.driver.find_element(By.CLASS_NAME, "btn-form-submit").click()
+

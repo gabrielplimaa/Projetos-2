@@ -1,30 +1,30 @@
-{% extends "app1/base.html" %}
-{% load static %}
-{% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pontos Chave do Artigo</title>
+    {% extends "app1/base.html" %}
+    {% load static %}
+    {% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pontos Chave do Artigo</title>
 
-</head>
-<body>
+    </head>
+    <body>
 
-    <div class="container">
-        {% if bullets %}
-            <h1>Pontos Chave do Artigo: "{{ bullets.first.artigo.titulo }}"</h1>
+        <div class="container">
+            {% if bullets %}
+                <h1>Pontos Chave do Artigo: "{{ bullets.first.artigo.titulo }}"</h1>
+                
+                <ul>
+                    {% for bullet in bullets %}
+                        <li>{{ bullet.bullets }}</li>
+                    {% endfor %}
+                </ul>
             
-            <ul>
-                {% for bullet in bullets %}
-                    <li>{{ bullet.bullets }}</li>
-                {% endfor %}
-            </ul>
-        
-        {% else %}
-            <h1>Nenhum Ponto Chave Encontrado</h1>
-            <p>Este artigo ainda não possui pontos chave registrados.</p>
-            
-            {% endif %}
-    </div>
+            {% else %}
+                <h1>Nenhum Ponto Chave Encontrado</h1>
+                <p>Este artigo ainda não possui pontos chave registrados.</p>
+                
+                {% endif %}
+        </div>
 
-</body>
-{% endblock content %}
+    </body>
+    {% endblock content %}
