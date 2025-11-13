@@ -53,21 +53,23 @@ a:hover {
     width: 48px;
     height: 48px;
     border: none;
+    background: transparent;
     border-radius: 50%;
-    background-color: #d90429;
     cursor: pointer;
-    padding: 0;
+    padding: 8px;
     transition: transform 0.2s ease;
 }
 
+/* Botão do hamburger */
 .hamburger span {
     display: block;
     height: 3px;
     width: 22px;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: #353535;
     border-radius: 999px;
     transition: transform 0.2s ease, opacity 0.2s ease;
+    transform-origin: center;
 }
 
 .hamburger.is-active span:nth-child(1) {
@@ -111,7 +113,7 @@ a:hover {
     background-color: #555;
     color: #fff;
 }
-
+/* Menu hamburger dentro */
 .main-nav {
     position: absolute;
     top: 100%;
@@ -153,32 +155,20 @@ a:hover {
 .main-nav a:hover {
     color: #f6c400;
 }
-
-.secondary-nav {
-    background-color: #f10000; /* Fundo escuro */
-    padding: 5px 0;
-    margin-bottom: 30px;
+.top-strip {
+    background-color: #B22222;
+    padding: 6px 0;
 }
-
-.secondary-nav ul {
-    display: flex; /* Coloca os itens lado a lado */
+.top-strip-content {
+    display: flex;
     justify-content: center;
-    list-style: none; /* Remove as bolinhas */
-    margin: 0;
-    padding: 0;
+    align-items: center;
+    min-height: 48px;
 }
-
-.secondary-nav li a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    font-size: 0.9rem;
-    font-weight: 500;
+.top-strip-logo img {
+    height: 36px;
+    width: auto;
     display: block;
-}
-
-.secondary-nav li a:hover {
-    background-color: #444; /* Efeito ao passar o mouse */
 }
 
 .grid-container {
@@ -209,6 +199,7 @@ a:hover {
     background-color: #d90429; /* Vermelho */
 }
 
+/* Card de uma notícia */
 .card {
     background-color: #f7f9fa;
     border: 1px solid #f0f0f0;

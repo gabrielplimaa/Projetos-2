@@ -10,45 +10,49 @@
 
 </head>
 <body>
+    <!--Faixa vermelha com logo da UOL-->
+    <div class="top-strip">
+        <div class="container top-strip-content">
+            <a href="{% url 'home' %}" class="top-strip-logo">
+                <img src="{% static 'app1/assets/logo-uol.png' %}" alt="Logo da UOL">
+            </a>
+        </div>
+    </div>
 
     <header class="main-header">
+        <!--Menu hamburger no header-->
         <div class="container header-grid">
             <button class="hamburger" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-
-            <a href="{% url 'home' %}" class="brand">
-                <img src="{% static 'app1/assets/logo.png' %}" alt="Logo do Jornal do Commercio" class="header-logo" >
-            </a>
-
+        
+            <!--Logo do JC no header-->
+                <a href="{% url 'home' %}" class="brand">
+                    <img src="{% static 'app1/assets/logo.png' %}" alt="Logo do Jornal do Commercio" class="header-logo" >
+                </a>
+        <!--Botão de login no header-->
             <div class="header-login">
                 <a href="{% url 'login' %}" class="login-btn">Login</a>
             </div>
         </div>
-  
+        <!--Tópicos do hamburger-->
             <nav class="main-nav" id="main-nav">
                 <ul>
                     <li><a href="{% url 'topico_pernambuco' %}">Pernambuco</a></li>
                     <li><a href="{% url 'topico_politica' %}">Política</a></li>
                     <li><a href="{% url 'topico_esportes' %}">Esportes</a></li>
                     <li><a href="{% url 'topico_cultura' %}">Cultura</a></li>
+                    <li><a>Ao Vivo</a>
+                    <li><a>Rádio Jornal(Recife)</a>
+                    <li><a>Rádio Jornal(Interior)</a>
+                    <li><a>TV Jornal(Recife)</a>
+                    <li><a>TV Jornal(Interior)</a>
                 </ul>
             </nav>
     </header>
 
-    <nav class="secondary-nav">
-        <div class="container">
-            <ul>
-                <li><a href="#">AO VIVO</a></li>
-                <li><a href="#">Rádio Jornal (RECIFE)</a></li>
-                <li><a href="#">Rádio Jornal (INTERIOR)</a></li>
-                <li><a href="#">TV Jornal (RECIFE)</a></li>
-                <li><a href="#">TV Jornal (INTERIOR)</a></li>
-            </ul>
-        </div>
-    </nav>
     <main class="container">
         {% block content %}
         {% endblock %}
