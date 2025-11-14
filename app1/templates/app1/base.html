@@ -10,7 +10,6 @@
 
 </head>
 <body>
-    <!--Faixa vermelha com logo da UOL-->
     <div class="top-strip">
         <div class="container top-strip-content">
             <a href="{% url 'home' %}" class="top-strip-logo">
@@ -20,7 +19,6 @@
     </div>
 
     <header class="main-header">
-        <!--Menu hamburger no header-->
         <div class="container header-grid">
             <button class="hamburger" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
                 <span></span>
@@ -28,17 +26,23 @@
                 <span></span>
             </button>
         
-            <!--Logo do JC no header-->
-                <a href="{% url 'home' %}" class="brand">
+            <a href="{% url 'home' %}" class="brand">
                     <img src="{% static 'app1/assets/logo.png' %}" alt="Logo do Jornal do Commercio" class="header-logo" >
                 </a>
-        <!--Botão de login no header-->
+
             <div class="header-login">
-                <a href="{% url 'login' %}" class="login-btn">Login</a>
+                
+                {% if user.is_authenticated %}
+                    <span style="margin-right: 15px; color: #555;">Olá, {{ user.username }}!</span>
+                    <a href="{% url 'logout' %}" class="login-btn">Sair</a>
+                
+                {% else %}
+                    <a href="{% url 'login' %}" class="login-btn">Login</a>
+                {% endif %}
+
             </div>
-        </div>
-        <!--Tópicos do hamburger-->
-            <nav class="main-nav" id="main-nav">
+            </div>
+        <nav class="main-nav" id="main-nav">
                 <ul>
                     <li><a href="{% url 'topico_pernambuco' %}">Pernambuco</a></li>
                     <li><a href="{% url 'topico_politica' %}">Política</a></li>
@@ -63,7 +67,6 @@
         </div>
     </footer>
 
-    <!--Esse script é para abrir/fechar o menu hamburger-->
     <script>
         document.addEventListener('DOMContentLoaded', function(){
             const toggle = document.getElementById('menu-toggle');
