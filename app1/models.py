@@ -8,6 +8,7 @@ class Artigos(models.Model):
     categoria = models.CharField(max_length=100)
     conteudo = models.TextField()
     data_publicacao = models.DateTimeField(auto_now_add=True)
+    favoritos = models.ManyToManyField(User, related_name='artigos_favoritos', blank=True)
 
     def __str__(self):
         return self.titulo
@@ -33,7 +34,7 @@ class Progresso( models.Model):
             status = "Completo"
         else:
             status = "Em progresso"
-        return f"{self.user.username} - {self.article.title} ({status})"
+        return f"{self.user.username} - {self.artigo.title} ({status})"
 
 
 class Progresso_diario(models.Model):

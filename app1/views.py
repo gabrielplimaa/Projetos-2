@@ -12,6 +12,8 @@ import io #manipulação de arquivos em memoria ram
 from django.utils import timezone
 from app1.utils.ai import gerar_contexto
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
 
 def sugerir_leitura(request, artigo_id):
     artigo_atual_id =artigo_id
@@ -183,3 +185,14 @@ def login_existente(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
+
+@login_required 
+def favoritar_artigo(request, artigo_id):
+    artigo = get_object_or_404(Artigos, id=artigo_id)
+    # Verifica se o usuário já favoritou este artigo
+    if artigo.favoritos.filter(id=request.user.id).exists():
+        artigo.favoritos.remove(request.user)
+    else:
+        artigo.favoritos.add(request.user)
+    # 'exibir_artigo' é o 'name' da sua URL que mostra o artigo
+    return redirect('exibir_artigo', artigo_id=artigo.id)

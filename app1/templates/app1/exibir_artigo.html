@@ -11,7 +11,6 @@
 
 
 
-    <!-- Banner de engajamento -->
     {% if mensagem %}
     <div id="banner" class="banner-engajamento">
         {{ mensagem }}
@@ -41,6 +40,26 @@
             {% endif %}
 
             <p>{{ artigo.conteudo|safe }}</p> 
+
+            <hr> {% if user.is_authenticated %}
+                <form action="{% url 'favoritar_artigo' artigo.id %}" method="POST" style="margin-bottom: 15px;">
+                    {% csrf_token %}
+                    
+                    {% if user in artigo.favoritos.all %}
+                        <button type="submit" style="background-color: #dc3545; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                            Desfavoritar
+                        </button>
+                    {% else %}
+                        <button type="submit" style="background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                            Favoritar
+                        </button>
+                    {% endif %}
+                </form>
+            {% else %}
+                <p style="margin-bottom: 15px;">
+                    Você precisa <a href="{% url 'login_existente' %}">fazer login</a> para favoritar este artigo.
+                </p>
+            {% endif %}
             <div class="article-actions">
                 <h4>
                     <a class="read-more" href="{% url 'sugestao' artigo.id %}">
@@ -61,18 +80,13 @@
         </div>
 
     </main>
-
-
     <script>
-        // Mostra o banner com animação
         document.addEventListener("DOMContentLoaded", function() {
             const banner = document.getElementById("banner");
             if (banner) {
                 setTimeout(() => {
                     banner.classList.add("show");
                 }, 200);
-
-                // Opcional: esconde o banner após 5 segundos
                 setTimeout(() => {
                     banner.classList.remove("show");
                 }, 5200);
