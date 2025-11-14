@@ -1,7 +1,9 @@
+from pickle import NONE
+from re import A
 from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .models import Artigos, Progresso_diario
+from .models import Artigos, Progresso_diario, Progresso
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -80,10 +82,17 @@ def topico_cultura(request):
 
 
 def exibir_artigo(request, artigo_id):
-    artigo=get_object_or_404(Artigos, id=artigo_id)
-    hoje=timezone.now().date()
-    visitante = request.META.get('REMOTE_ADDR', 'anonimo')
-    diario,created=Progresso_diario.objects.get_or_create(data=hoje, visitante=visitante)
+    flag = False
+    artigo = get_object_or_404(Artigos, id=artigo_id)
+    hoje = timezone.now().date()
+    if request.user.is_authenticated:
+        visitante = f"user_{request.user.id}"
+    else:
+        visitante = f"ip_{request.META.get('REMOTE_ADDR', 'anonimo')}"
+    diario, created = Progresso_diario.objects.get_or_create(
+        data=hoje,
+        visitante=visitante
+    )
     if 'artigos_lidos' not in request.session:
         request.session['artigos_lidos'] = []
     if artigo_id not in request.session['artigos_lidos']:
@@ -91,11 +100,22 @@ def exibir_artigo(request, artigo_id):
         diario.save()
         request.session['artigos_lidos'].append(artigo_id)
         request.session.modified = True
-    mensagem=""
-    artigo_lidos_na_sessao=len(request.session['artigos_lidos'])
-    if artigo_lidos_na_sessao>1:
-        mensagem=f"Você leu {artigo_lidos_na_sessao} artigos nesta sessão."
-    context={'artigo':artigo, 'mensagem':mensagem}
+    mensagem = ""
+    if request.user.is_authenticated:
+        progresso, created = Progresso.objects.get_or_create(
+            user=request.user,
+            artigo=artigo
+        )
+        if not progresso.completado:
+            progresso.completado = True
+            progresso.save()
+    quantidade_de_artigos_lidos = diario.artigos_lidos
+    if quantidade_de_artigos_lidos == 3:
+        flag = True
+    artigos_lidos_na_sessao = len(request.session['artigos_lidos'])
+    if artigos_lidos_na_sessao >= 1:
+        mensagem = f"Você leu {artigos_lidos_na_sessao} artigos nesta sessão."
+    context = {'artigo': artigo, 'mensagem': mensagem, 'flag': flag}
     return render(request, 'app1/exibir_artigo.html', context)
 
 def conteudo_de_contexto(request,id_artigo):
@@ -191,3 +211,47 @@ def meus_favoritos(request):
         'lista_favoritos': lista_favoritos
     }
     return render(request, 'app1/meus_favoritos.html', context)
+
+@login_required
+def conteudos_com_Base_favoritos(request):
+    favoritos = request.user.artigos_favoritos.all()
+    esportes= favoritos.filter(categoria='Esportes').count()
+    politica=favoritos.filter(categoria='Política').count()
+    cultura=favoritos.filter(categoria='Cultura').count()
+    pernambuco=favoritos.filter(categoria='Pernambuco').count()
+    lista=[esportes,politica,cultura,pernambuco]
+    mais_favoritado=max(lista)
+    for i in range(len(lista)):
+        if lista[i]==mais_favoritado:
+            if i==0:
+                personalizado=Artigos.objects.filter(categoria='Esportes').order_by('-data_publicacao')[:5]
+                context = {'personalizado': personalizado}
+                return render(request, 'app1/conteudos_favoritos.html', context)
+            elif i==1:
+                personalizado=Artigos.objects.filter(categoria='Política').order_by('-data_publicacao')[:5]
+                context = {'personalizado': personalizado}
+                return render(request, 'app1/conteudos_favoritos.html', context)
+            elif i==2:
+                personalizado=Artigos.objects.filter(categoria='Cultura').order_by('-data_publicacao')[:5]
+                context = {'personalizado': personalizado}
+                return render(request, 'app1/conteudos_favoritos.html', context)
+            else:
+                personalizado=Artigos.objects.filter(categoria='Pernambuco').order_by('-data_publicacao')[:5]
+                context = {'personalizado': personalizado}
+                return render(request, 'app1/conteudos_favoritos.html', context)
+            
+    if not favoritos.exists():
+        return NONE
+@login_required
+def notificacoes_sugeridas(request):
+    sugestoes=conteudos_com_Base_favoritos(request)
+    categoria=sugestoes.categoria
+    artigos=Artigos.objects.filter(categoria=categoria)
+    lista_de_sugestoes=[]
+    for artigo in artigos:
+        if artigo not in sugestoes:
+            artigo.append(lista_de_sugestoes)
+    if sugestoes is NONE:
+        return redirect('home')
+    context={'lista_de_sugestoes':lista_de_sugestoes}
+    return render(request,'app1/notificacoes_sugeridas.html',context)

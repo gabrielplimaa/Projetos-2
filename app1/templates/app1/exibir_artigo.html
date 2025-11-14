@@ -1,26 +1,41 @@
 {% extends "app1/base.html" %}
 {% load static %}
+
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ artigo.titulo }}</title>
-    <link rel="stylesheet" href="{% static 'app1/css/style.css' %}">
-</head>
-<body>
 
-
-
+    <!-- Banner -->
     {% if mensagem %}
     <div id="banner" class="banner-engajamento">
         {{ mensagem }}
     </div>
     {% endif %}
-
+<style>
+    .banner-engajamento {
+        opacity: 0; /* começa invisível */
+        transition: opacity 0.6s ease;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color:rgb(0, 0, 0);
+        color: white;
+        padding: 12px 18px;
+        border-radius: 6px;
+        font-weight: bold;
+        z-index: 9999;
+    }
+    
+    .banner-engajamento.show {
+        opacity: 1; /* visível quando a classe show é adicionada */
+    }
+</style>
     <main class="container">
-        
+        {% if flag %}
+        <div class="article-flag">
+            <a>VEJA A NOSSA OPÇÃO NEWSLETTER</a>
+        </div>
+        {% endif %}
+
         <div class="article-content">
-            
             <audio controls>
                 <source src="{% url 'artigo_audio' artigo.id %}" type="audio/mpeg">
                 Seu navegador não suporta áudio.
@@ -34,7 +49,9 @@
 
             <p>{{ artigo.conteudo|safe }}</p> 
 
-            <hr> {% if user.is_authenticated %}
+            <hr>
+
+            {% if user.is_authenticated %}
                 <form action="{% url 'favoritar_artigo' artigo.id %}" method="POST" style="margin-bottom: 15px;">
                     {% csrf_token %}
                     
@@ -87,5 +104,4 @@
         });
     </script>
 
-</body>
 {% endblock content %}
