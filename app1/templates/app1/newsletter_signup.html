@@ -1,0 +1,110 @@
+{%extends "app1/base.html" %}
+{% block title %}Newsletter{% endblock %}
+{% block content %}
+{% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color:rgb(0, 0, 0);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .greeting {
+            color:rgb(0, 0, 0);
+        }
+        .card {
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .card img {
+            width: 150px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 15px;
+        }
+        .card-content h3 {
+            margin: 0 0 10px 0;
+            color:rgb(0, 0, 0);
+        }
+        .card-content p {
+            margin: 0 0 10px 0;
+            color: #555;
+            font-size: 14px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color:rgb(0, 0, 0);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .footer {
+            background-color: #f0f0f0;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+
+        @media screen and (max-width: 600px) {
+            .card {
+                flex-direction: column;
+            }
+            .card img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho -->
+        <div class="header">
+            <h1>Jornal do Commercio</h1>
+        </div>
+
+        <!-- Saudação -->
+        <div class="content">
+            <h2 class="greeting">Ative a funcionalidade do Newsletter</h2>
+            
+
+            <!-- Cards de notícias -->
+            <div class="card">
+                <div class="card-content">
+                    <a href="{% url 'enviar_sugestoes' %}" class="btn btn-primary">
+                        ATIVAR!
+                    </a>
+                </div>
+            </div>
+    </div>
+</body>
+    </div>
+{% endblock content %}

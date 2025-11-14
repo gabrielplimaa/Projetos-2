@@ -1,6 +1,5 @@
-from pickle import NONE
-from re import A
-from django.http import FileResponse, HttpResponseRedirect
+import re
+from django.http import FileResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Artigos, Progresso_diario, Progresso
@@ -14,7 +13,10 @@ from django.utils import timezone
 from app1.utils.ai import gerar_contexto
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.conf import settings
+from django.contrib import messages
 
 def sugerir_leitura(request, artigo_id):
     artigo_atual_id =artigo_id
@@ -193,7 +195,13 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
 
-@login_required 
+
+#--------------
+# Favoritar artigos
+#--------------
+
+
+@login_required #funcao feita por rafael
 def favoritar_artigo(request, artigo_id):
     artigo = get_object_or_404(Artigos, id=artigo_id)
     # Verifica se o usuário já favoritou este artigo
@@ -215,43 +223,70 @@ def meus_favoritos(request):
 @login_required
 def conteudos_com_Base_favoritos(request):
     favoritos = request.user.artigos_favoritos.all()
-    esportes= favoritos.filter(categoria='Esportes').count()
-    politica=favoritos.filter(categoria='Política').count()
-    cultura=favoritos.filter(categoria='Cultura').count()
-    pernambuco=favoritos.filter(categoria='Pernambuco').count()
-    lista=[esportes,politica,cultura,pernambuco]
-    mais_favoritado=max(lista)
-    for i in range(len(lista)):
-        if lista[i]==mais_favoritado:
-            if i==0:
-                personalizado=Artigos.objects.filter(categoria='Esportes').order_by('-data_publicacao')[:5]
-                context = {'personalizado': personalizado}
-                return render(request, 'app1/conteudos_favoritos.html', context)
-            elif i==1:
-                personalizado=Artigos.objects.filter(categoria='Política').order_by('-data_publicacao')[:5]
-                context = {'personalizado': personalizado}
-                return render(request, 'app1/conteudos_favoritos.html', context)
-            elif i==2:
-                personalizado=Artigos.objects.filter(categoria='Cultura').order_by('-data_publicacao')[:5]
-                context = {'personalizado': personalizado}
-                return render(request, 'app1/conteudos_favoritos.html', context)
-            else:
-                personalizado=Artigos.objects.filter(categoria='Pernambuco').order_by('-data_publicacao')[:5]
-                context = {'personalizado': personalizado}
-                return render(request, 'app1/conteudos_favoritos.html', context)
-            
     if not favoritos.exists():
-        return NONE
+        return None
+    categorias = ['Esportes', 'Política', 'Cultura', 'Pernambuco']
+    contagens = [favoritos.filter(categoria=c).count() for c in categorias]
+    indice_maior = contagens.index(max(contagens))
+    categoria_sugerida = categorias[indice_maior]
+    sugestoes = Artigos.objects.filter(categoria=categoria_sugerida).order_by('-data_publicacao')[:5]
+    context={'sugestoes':sugestoes,'categoria':categoria_sugerida}
+    return render(request,'app1/conteudos_com_Base_favoritos.html',context)
+
+
+
+# Função para obter artigos novos sugeridos com base nos favoritos do usuário + gmail
+def enviar_email_sugestoes_html(user, artigos):
+    if not artigos:
+        return False
+
+    categoria = artigos[0].categoria
+
+    html_content = render_to_string('emails/sugestoes.html', {
+        'user': user,
+        'categoria': categoria,
+        'artigos': artigos[:5],  # envia até 5 artigos
+        'artigo_url_base': 'https://seusite.com/artigo/',  # ajuste para seu domínio (no caso seria o dominio do jornal do comercio)
+    })
+
+    text_content = f"Olá {user.first_name or user.username}! Você tem novas notícias na categoria {categoria}."
+
+    email = EmailMultiAlternatives(
+        subject=f"Novas notícias em {categoria} para você!",
+        body=text_content,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[user.email],
+    )
+
+    email.attach_alternative(html_content, "text/html")
+    email.send()
+    return True
+
+def artigos_novos_sugeridos(user):
+    favoritos = user.artigos_favoritos.all()
+    if not favoritos.exists():
+        return []
+
+    categorias = ['Esportes', 'Política', 'Cultura', 'Pernambuco']
+    contagens = [favoritos.filter(categoria=c).count() for c in categorias]
+    categoria_favorita = categorias[contagens.index(max(contagens))]
+
+    artigos = Artigos.objects.filter(categoria=categoria_favorita).order_by('-data_publicacao')[:10]
+
+    return [artigo for artigo in artigos if artigo not in favoritos]
+
 @login_required
-def notificacoes_sugeridas(request):
-    sugestoes=conteudos_com_Base_favoritos(request)
-    categoria=sugestoes.categoria
-    artigos=Artigos.objects.filter(categoria=categoria)
-    lista_de_sugestoes=[]
-    for artigo in artigos:
-        if artigo not in sugestoes:
-            artigo.append(lista_de_sugestoes)
-    if sugestoes is NONE:
-        return redirect('home')
-    context={'lista_de_sugestoes':lista_de_sugestoes}
-    return render(request,'app1/notificacoes_sugeridas.html',context)
+def enviar_sugestoes_view(request):
+    artigos = artigos_novos_sugeridos(request.user)
+    enviado = enviar_email_sugestoes_html(request.user, artigos)
+
+    if enviado:
+        messages.success(request, "E-mail enviado com suas sugestões personalizadas!")
+    else:
+        messages.info(request, "Não há novidades para enviar no momento.")
+
+    return redirect('home')
+
+
+def newsletter_signup (request):
+    return render(request,'app1/newsletter_signup.html',{})

@@ -130,3 +130,14 @@ LOGOUT_URL = 'home'
 load_dotenv()
 OPENAI_KEY = os.getenv('OPENAI_KEY')
 GEMINI_KEY = os.getenv('GEMINI_KEY')
+
+#email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = os.getenv('EMAIL_USER')# Conta de email que enviará os emails
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')# Senha do aplicativo (App Password), NÃO é a senha normal do Gmail
+# Gerada em: https://myaccount.google.com/apppasswords
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # Nome que aparecerá como remetente dos emails

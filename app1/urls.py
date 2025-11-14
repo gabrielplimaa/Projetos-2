@@ -20,4 +20,7 @@ urlpatterns = [
     path('cadastro/', views.cadastro, name='cadastro'),
     path('logout/',views.logout_view,name='logout'),
     path('artigo/<int:artigo_id>/favoritar/', views.favoritar_artigo, name='favoritar_artigo'),
+    path('enviar_sugestoes/', views.enviar_sugestoes_view, name='enviar_sugestoes'),
+    path('newsletter_signup/', views.newsletter_signup, name='newsletter'),
+    path('conteudos_com_Base_favoritos/', views.conteudos_com_Base_favoritos, name='conteudos_com_Base_favoritos'),
 ]

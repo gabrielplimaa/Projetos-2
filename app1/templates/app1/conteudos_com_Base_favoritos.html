@@ -1,0 +1,117 @@
+{% extends "app1/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .newsletter-container {
+        max-width: 700px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .newsletter-header {
+        background-color: #004080;
+        color: white;
+        text-align: center;
+        padding: 20px;
+    }
+    .newsletter-header h1 {
+        margin: 0;
+        font-size: 28px;
+    }
+    .newsletter-content {
+        padding: 20px;
+    }
+    .newsletter-content h2 {
+        color: #004080;
+    }
+    .card {
+        display: flex;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    .card img {
+        width: 150px;
+        object-fit: cover;
+    }
+    .card-content {
+        padding: 15px;
+    }
+    .card-content h3 {
+        margin: 0 0 10px 0;
+        color: #004080;
+    }
+    .card-content p {
+        margin: 0 0 10px 0;
+        color: #555;
+        font-size: 14px;
+    }
+    .btn {
+        display: inline-block;
+        padding: 8px 12px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .newsletter-footer {
+        background-color: #f0f0f0;
+        padding: 15px;
+        text-align: center;
+        font-size: 12px;
+        color: #777;
+    }
+
+    @media screen and (max-width: 600px) {
+        .card {
+            flex-direction: column;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+    }
+</style>
+
+<div class="newsletter-container">
+    <!-- Cabeçalho -->
+    <div class="newsletter-header">
+        <h1>Jornal do Commercio</h1>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="newsletter-content">
+        <h2>Novidades na categoria: {{ categoria }}</h2>
+
+        {% for artigo in sugestoes %}
+        <div class="card">
+            {% if artigo.imagem_url %}
+            <img src="{{ artigo.imagem_url }}" alt="{{ artigo.titulo }}">
+            {% endif %}
+            <div class="card-content">
+                <h3>{{ artigo.titulo }}</h3>
+                <p>{{ artigo.subtitulo|default:"Sem resumo disponível." }}</p>
+                <a href="{% url 'exibir_artigo' artigo.id %}" class="btn">Ler mais</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Rodapé -->
+    <div class="newsletter-footer">
+        Você está recebendo esta newsletter porque acompanha nossas notícias.<br>
+        Se não quiser receber mais, ignore esta mensagem.
+    </div>
+</div>
+{% endblock content %}
