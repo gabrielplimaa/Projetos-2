@@ -17,5 +17,6 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('login_existente/', views.login_existente, name='login_existente'),
     path('cadastro/', views.cadastro, name='cadastro'),
-    path('logout/',views.logout_view,name='logout')
+    path('logout/',views.logout_view,name='logout'),
+    path('artigo/<int:artigo_id>/favoritar/', views.favoritar_artigo, name='favoritar_artigo'),
 ]
