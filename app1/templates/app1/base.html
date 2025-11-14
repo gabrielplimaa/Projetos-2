@@ -48,6 +48,12 @@
                     <li><a href="{% url 'topico_politica' %}">Política</a></li>
                     <li><a href="{% url 'topico_esportes' %}">Esportes</a></li>
                     <li><a href="{% url 'topico_cultura' %}">Cultura</a></li>
+
+                    {% if user.is_authenticated %}
+                    <li style="background-color: #f0f0f0;">
+                        <a href="{% url 'meus_favoritos' %}" style="font-weight: bold; color: #333;">Meus Favoritos</a>
+                    </li>
+                    {% endif %}
                     <li><a>Ao Vivo</a></li>
                     <li><a>Rádio Jornal(Recife)</a></li>
                     <li><a>Rádio Jornal(Interior)</a></li>

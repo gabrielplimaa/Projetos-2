@@ -183,3 +183,11 @@ def favoritar_artigo(request, artigo_id):
         artigo.favoritos.add(request.user)
     # 'exibir_artigo' é o 'name' da sua URL que mostra o artigo
     return redirect('exibir_artigo', artigo_id=artigo.id)
+
+@login_required 
+def meus_favoritos(request):
+    lista_favoritos = request.user.artigos_favoritos.all().order_by('-data_publicacao')
+    context = {
+        'lista_favoritos': lista_favoritos
+    }
+    return render(request, 'app1/meus_favoritos.html', context)

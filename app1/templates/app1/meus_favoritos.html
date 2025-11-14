@@ -1,0 +1,35 @@
+{% extends "app1/base.html" %}
+{% load static %}
+
+{% block title %}Meus Favoritos{% endblock %}
+
+{% block content %}
+<main class="container">
+    <div class="articles-list" style="margin-top: 20px;">
+        
+        <h2 style="border-bottom: 2px solid #E60000; padding-bottom: 10px;">Meus Artigos Favoritos</h2>
+
+        {% for artigo in lista_favoritos %}
+            <article class="card">
+                <div class="card-content">
+                    <a href="#" class="card-topic">{{ artigo.categoria|upper }}</a>
+                    
+                    <h3 class="card-title">
+                        <a href="{% url 'exibir_artigo' artigo.id %}">
+                            {{ artigo.titulo }}
+                        </a>
+                    </h3>
+                    
+                    {% if artigo.data_publicacao %}
+                        <p class="card-date">Publicado em: {{ artigo.data_publicacao|date:"d de F, Y" }}</p>
+                    {% endif %}
+                </div>
+            </article>
+            <hr> {% empty %}
+            <p>Você ainda não favoritou nenhum artigo.</p>
+            <p><a href="{% url 'home' %}">Veja as notícias</a> e comece a favoritar!</p>
+        {% endfor %}
+
+    </div>
+</main>
+{% endblock content %}

@@ -16,6 +16,7 @@ urlpatterns = [
     path('artigo/<int:id_artigo>/contexto/', views.conteudo_de_contexto, name='conteudo_de_contexto'),
     path('login/', views.login_view, name='login'),
     path('login_existente/', views.login_existente, name='login_existente'),
+    path('meus-favoritos/', views.meus_favoritos, name='meus_favoritos'), 
     path('cadastro/', views.cadastro, name='cadastro'),
     path('logout/',views.logout_view,name='logout'),
     path('artigo/<int:artigo_id>/favoritar/', views.favoritar_artigo, name='favoritar_artigo'),
