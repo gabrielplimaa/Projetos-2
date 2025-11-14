@@ -1,9 +1,10 @@
 from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .models import Artigos, Progresso_diario
+from .models import Artigos, Progresso_diario, Progresso
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from gtts import gTTS #tem que baixar essa biblioteca do google
 import io #manipulação de arquivos em memoria ram
@@ -78,6 +79,7 @@ def topico_cultura(request):
 
 
 def exibir_artigo(request, artigo_id):
+    flag= False
     artigo=get_object_or_404(Artigos, id=artigo_id)
     hoje=timezone.now().date()
     visitante = request.META.get('REMOTE_ADDR', 'anonimo')
@@ -93,7 +95,18 @@ def exibir_artigo(request, artigo_id):
     artigo_lidos_na_sessao=len(request.session['artigos_lidos'])
     if artigo_lidos_na_sessao>1:
         mensagem=f"Você leu {artigo_lidos_na_sessao} artigos nesta sessão."
-    context={'artigo':artigo, 'mensagem':mensagem}
+    usuario_autenticado=request.user.is_authenticated
+    if usuario_autenticado:
+        progresso,created=Progresso.objects.get_or_create(user=request.user, artigo=artigo)
+        if not progresso.completado:
+            progresso.completado=True
+            progresso.save()
+        quantidade_artigos_lidos=Progresso.objects.filter(user=request.user, completado=True,date=hoje).count()
+        if quantidade_artigos_lidos==3:
+            flag=True
+        else:
+            flag=False
+    context={'artigo':artigo, 'mensagem':mensagem, 'flag':flag}
     return render(request, 'app1/exibir_artigo.html', context)
 
 def conteudo_de_contexto(request,id_artigo):
